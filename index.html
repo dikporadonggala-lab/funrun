@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HARDIKNAS FUN RUN 2026 DISDIKPORA DONGGALA </title>
+    <title>HARDIKNAS FUN RUN 2026 DISDIKPORA DONGGALA</title>
     <!-- Menggunakan Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Library QR Code Scanner -->
@@ -58,9 +58,10 @@
     <!-- 1. VIEW: MAIN (SMART FORM) -->
     <div id="view-main" class="view-section active min-h-screen py-10 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
         <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl overflow-hidden relative border border-gray-100">
-            <div class="bg-gradient-to-br from-blue-700 to-indigo-800 py-8 px-6 text-center">
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-white leading-tight tracking-wide">HARDIKNAS FUN RUN 2026<br><span class="text-yellow-300">DAMPELAS</span></h2>
-                <p class="text-blue-100 mt-2 text-sm">Sistem Pendaftaran & Tiket</p>
+            <div class="bg-gradient-to-br from-blue-700 to-indigo-800 py-8 px-4 text-center">
+                <!-- Teks disesuaikan ukurannya dan ditambahkan whitespace-nowrap agar 2026 tidak jatuh -->
+                <h2 class="text-[1.15rem] sm:text-2xl font-black text-white leading-tight whitespace-nowrap">HARDIKNAS FUN RUN 2026<br><span class="text-yellow-300 text-[1rem] sm:text-xl">DISDIKPORA DONGGALA</span></h2>
+                <p class="text-blue-100 mt-2 text-xs sm:text-sm">Sistem Pendaftaran & Tiket</p>
             </div>
             
             <form id="form-smart" class="p-8 space-y-6">
@@ -358,7 +359,7 @@
         // =========================================================================
         // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI BAWAH INI
         // =========================================================================
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbziKZ59Kb3YmUHfmCkqXjsl1TjOEwy5JiEEF4yrraLQxV24knE0qUvahE3geBG1C-C3/exec'; 
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzy244y0BZ2FK79nwNzEuKfClNlCBaoGvdm-fP9wYzKNqI1rS6EBJmChuMyjQ3MWbp_/exec'; 
 
         let registrations = [];
         let isChecking = true; 
@@ -802,7 +803,7 @@
                             <div class="absolute top-0 left-0 w-full h-4 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
                             <div class="absolute bottom-0 left-0 w-full h-4 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
                             
-                            <h1 class="text-3xl font-extrabold tracking-widest text-gray-800 uppercase mb-6 text-center">HARDIKNAS FUN RUN 2026<br><span class="text-xl">DAMPELAS</span></h1>
+                            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-widest text-gray-800 uppercase mb-6 text-center whitespace-nowrap">HARDIKNAS FUN RUN 2026<br><span class="text-xl">DISDIKPORA DONGGALA</span></h1>
                             
                             <div class="text-[120px] font-black leading-none text-blue-600 mb-6 tracking-tighter">
                                 ${bibNumberOnly}
