@@ -3,85 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendaftaran Fun Run 2026</title>
+    <title>HARDIKNAS FUN RUN 2026 DAMPELAS</title>
+    <!-- Menggunakan Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Library QR Code Scanner -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     
     <style>
-        /* Gaya khusus untuk mode cetak A4 dan Tiket */
+        /* Gaya cetak PDF */
         @media print {
             @page { size: A4 portrait; margin: 0; }
             body { margin: 0; background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .no-print { display: none !important; }
             .print-only { display: block !important; }
             .page-break { page-break-after: always; }
-            
-            /* Perbaikan Bug Print: Hanya mencetak view yang benar-benar aktif */
             .view-section { display: none !important; }
             .view-section.active { display: block !important; }
-            
-            /* Penyesuaian khusus saat peserta memprint bukti tiket */
             #view-success .max-w-sm { max-width: 100% !important; border: none; box-shadow: none; margin-top: 2rem;}
         }
         
-        .a4-page {
-            width: 210mm;
-            min-height: 297mm;
-            background: white;
-            margin: 0 auto;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        .bib-card {
-            height: 148.5mm; /* Setengah A4 */
-            width: 100%;
-            box-sizing: border-box;
-        }
+        .a4-page { width: 210mm; min-height: 297mm; background: white; margin: 0 auto; padding: 0; box-sizing: border-box; }
+        .bib-card { height: 148.5mm; width: 100%; box-sizing: border-box; }
         
         /* Animasi Notifikasi */
-        @keyframes pulse-bg {
-            0%, 100% { background-color: #22c55e; }
-            50% { background-color: #16a34a; }
-        }
+        @keyframes pulse-bg { 0%, 100% { background-color: #22c55e; } 50% { background-color: #16a34a; } }
         .animate-pulse-bg { animation: pulse-bg 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         
-        /* Penyesuaian Bottom Nav untuk iPhone Safari (Safe Area) */
+        /* Animasi Melayang (Float) Bosku */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float { animation: float 3.5s ease-in-out infinite; }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        
+        /* Animasi Blob Background Login */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob { animation: blob 7s infinite; }
+        .animation-delay-2000 { animation-delay: 2s; }
+
         .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
     </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800">
 
-    <div id="notification-bar" class="fixed top-0 left-0 w-full text-white text-sm p-3 text-center animate-pulse-bg z-50 hidden shadow-md font-medium">
-        </div>
+    <div id="notification-bar" class="fixed top-0 left-0 w-full text-white text-sm p-3 text-center animate-pulse-bg z-50 hidden shadow-md font-medium"></div>
 
+    <!-- 1. VIEW: MAIN (SMART FORM) -->
     <div id="view-main" class="view-section active min-h-screen py-10 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
-        <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden relative">
-            <div class="bg-gradient-to-r from-blue-600 to-indigo-700 py-6 px-8 text-center">
-                <h2 class="text-3xl font-extrabold text-white">Fun Run 2026</h2>
-                <p class="text-blue-100 mt-1">Sistem Pendaftaran & Tiket</p>
+        <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl overflow-hidden relative border border-gray-100">
+            <div class="bg-gradient-to-br from-blue-700 to-indigo-800 py-8 px-6 text-center">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white leading-tight tracking-wide">HARDIKNAS FUN RUN 2026<br><span class="text-yellow-300">DAMPELAS</span></h2>
+                <p class="text-blue-100 mt-2 text-sm">Sistem Pendaftaran & Tiket</p>
             </div>
             
             <form id="form-smart" class="p-8 space-y-6">
+                <!-- STEP 1: Nomor WA -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Nomor WhatsApp</label>
-                    <input type="tel" id="reg-wa" required class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-3 px-4 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-lg font-semibold tracking-wide transition-colors" placeholder="081234567890">
+                    <input type="tel" id="reg-wa" required class="mt-1 block w-full border border-gray-300 rounded-xl shadow-sm py-3 px-4 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-lg font-semibold tracking-wide transition-colors" placeholder="081234567890">
                     <p id="wa-help-text" class="text-xs text-gray-500 mt-2">*Masukkan No. WA untuk mendaftar baru atau melihat tiket Anda.</p>
                 </div>
 
+                <!-- STEP 2: Detail Pendaftaran (Tersembunyi secara default) -->
                 <div id="step-2-details" class="hidden space-y-6 pt-6 border-t border-gray-100 animate-fade-in">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-                        <input type="text" id="reg-name" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Contoh: Budi Santoso">
+                        <input type="text" id="reg-name" class="mt-1 block w-full border border-gray-300 rounded-xl shadow-sm py-3 px-4 focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Contoh: Budi Santoso">
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Kategori Peserta</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Kategori Peserta</label>
                         <div class="flex gap-4">
                             <label class="flex-1 cursor-pointer">
                                 <input type="radio" name="gender" value="Laki-laki" class="peer sr-only">
-                                <div class="flex flex-col items-center justify-center py-4 border-2 border-gray-200 rounded-xl peer-checked:border-blue-500 peer-checked:bg-blue-50 text-gray-600 peer-checked:text-blue-600 transition-all hover:bg-gray-50">
-                                    <div class="w-16 h-16 mb-2 rounded-full bg-blue-100 flex items-center justify-center shadow-inner border border-blue-200">
+                                <div class="flex flex-col items-center justify-center py-5 border-2 border-gray-200 rounded-2xl peer-checked:border-blue-500 peer-checked:bg-blue-50 text-gray-600 peer-checked:text-blue-700 transition-all hover:bg-gray-50 shadow-sm">
+                                    <!-- Efek Melayang di Ikon Laki-laki -->
+                                    <div class="w-16 h-16 mb-3 rounded-full bg-blue-100 flex items-center justify-center shadow-inner border border-blue-200 animate-float">
                                         <svg class="w-9 h-9 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
                                     </div>
                                     <span class="text-sm font-bold">Laki-laki</span>
@@ -89,8 +93,9 @@
                             </label>
                             <label class="flex-1 cursor-pointer">
                                 <input type="radio" name="gender" value="Perempuan" class="peer sr-only">
-                                <div class="flex flex-col items-center justify-center py-4 border-2 border-gray-200 rounded-xl peer-checked:border-pink-500 peer-checked:bg-pink-50 text-gray-600 peer-checked:text-pink-600 transition-all hover:bg-gray-50">
-                                    <div class="w-16 h-16 mb-2 rounded-full bg-pink-100 flex items-center justify-center shadow-inner border border-pink-200">
+                                <div class="flex flex-col items-center justify-center py-5 border-2 border-gray-200 rounded-2xl peer-checked:border-pink-500 peer-checked:bg-pink-50 text-gray-600 peer-checked:text-pink-700 transition-all hover:bg-gray-50 shadow-sm">
+                                    <!-- Efek Melayang di Ikon Perempuan -->
+                                    <div class="w-16 h-16 mb-3 rounded-full bg-pink-100 flex items-center justify-center shadow-inner border border-pink-200 animate-float delay-100">
                                         <svg class="w-9 h-9 text-pink-500" fill="currentColor" viewBox="0 0 24 24" style="transform: scaleX(-1);"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
                                     </div>
                                     <span class="text-sm font-bold">Perempuan</span>
@@ -101,105 +106,127 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Alamat Lengkap</label>
-                        <textarea id="reg-address" rows="3" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Jl. Contoh No. 123..."></textarea>
+                        <textarea id="reg-address" rows="3" class="mt-1 block w-full border border-gray-300 rounded-xl shadow-sm py-3 px-4 focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Ketik alamat domisili..."></textarea>
                     </div>
                 </div>
 
-                <button type="submit" id="btn-submit-smart" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-base font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all">
+                <button type="submit" id="btn-submit-smart" class="w-full flex justify-center py-4 px-4 border border-transparent rounded-xl shadow-lg text-base font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-transform active:scale-95">
                     Lanjut
                 </button>
             </form>
 
-            <div class="bg-gray-50 border-t border-gray-100 p-4 text-center">
-                <button onclick="switchView('view-admin-login')" class="text-xs text-gray-500 hover:text-blue-600 font-medium">
-                    Login Admin Panitia
+            <div class="bg-gray-50 border-t border-gray-100 p-5 text-center">
+                <button onclick="switchView('view-admin-login')" class="text-sm text-gray-500 hover:text-blue-700 font-semibold transition-colors flex items-center justify-center mx-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                    Login Panitia
                 </button>
             </div>
         </div>
     </div>
 
+    <!-- 2. VIEW: SUCCESS (TIKET) -->
     <div id="view-success" class="view-section hidden min-h-screen py-10 px-4 flex items-center justify-center">
-        <div class="max-w-sm w-full bg-white rounded-2xl shadow-xl overflow-hidden text-center p-8 border-t-8 border-green-500">
+        <div class="max-w-sm w-full bg-white rounded-3xl shadow-2xl overflow-hidden text-center p-8 border-t-8 border-green-500 relative">
             <div class="flex justify-center mb-4 no-print">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <svg class="w-16 h-16 text-green-500 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
-            <h2 class="text-2xl font-bold text-gray-800" id="success-title">Pendaftaran Berhasil!</h2>
-            <p class="text-gray-500 mt-2 text-sm no-print">Tunjukkan QR Code ini kepada panitia untuk menukarkan Race Pack / BIB Number Anda.</p>
+            <h2 class="text-2xl font-extrabold text-gray-800" id="success-title">Pendaftaran Berhasil!</h2>
+            <p class="text-gray-500 mt-2 text-sm no-print">Simpan & tunjukkan QR Code ini untuk menukarkan BIB Number Anda.</p>
             
-            <div class="my-6 p-4 bg-gray-50 rounded-xl border border-gray-100 inline-block">
-                <img id="success-qr" src="" alt="QR Code" class="mx-auto w-48 h-48 rounded-lg shadow-sm bg-white p-2" />
+            <div class="my-6 p-4 bg-gray-50 rounded-2xl border border-gray-200 inline-block shadow-sm">
+                <img id="success-qr" src="" alt="QR Code" class="mx-auto w-48 h-48 rounded-xl bg-white p-2" />
             </div>
 
-            <div class="bg-blue-50 p-4 rounded-xl mb-6 text-center">
-                <p class="text-sm text-blue-800 font-medium uppercase tracking-wider">BIB Number</p>
-                <p id="success-bib" class="text-4xl font-extrabold text-blue-600 mt-1">FR-0000</p>
-                <p id="success-name" class="text-lg font-bold text-gray-700 mt-2">Nama Peserta</p>
-                <p id="success-gender" class="text-sm text-gray-500 mt-1 uppercase">-</p>
+            <div class="bg-blue-50 p-5 rounded-2xl mb-6 text-center border border-blue-100">
+                <p class="text-sm text-blue-800 font-bold uppercase tracking-wider">BIB Number</p>
+                <p id="success-bib" class="text-4xl font-black text-blue-700 mt-1">FR-0000</p>
+                <p id="success-name" class="text-lg font-bold text-gray-800 mt-3 border-t border-blue-200 pt-2">Nama Peserta</p>
+                <p id="success-gender" class="text-sm text-gray-500 mt-1 uppercase font-semibold">-</p>
             </div>
 
             <div class="space-y-3 no-print">
-                <button onclick="window.print()" class="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <button onclick="window.print()" class="w-full flex justify-center items-center py-3 px-4 rounded-xl shadow-md text-sm font-bold text-white bg-green-600 hover:bg-green-700 transition-colors">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                     Simpan / Cetak Tiket
                 </button>
-                <button onclick="switchView('view-main')" class="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none">
-                    Kembali ke Beranda
+                <button onclick="switchView('view-main')" class="w-full flex justify-center py-3 px-4 rounded-xl text-sm font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors">
+                    Kembali
                 </button>
             </div>
         </div>
     </div>
 
-    <div id="view-admin-login" class="view-section hidden min-h-screen bg-gray-800 flex items-center justify-center px-4">
-        <div class="max-w-sm w-full bg-white rounded-xl shadow-2xl p-8">
-            <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Admin Panel</h2>
+    <!-- 3. VIEW: ADMIN LOGIN (SUDAH MULTI-ROLE) -->
+    <div id="view-admin-login" class="view-section hidden min-h-screen bg-gray-900 flex items-center justify-center px-4 relative overflow-hidden">
+        <!-- Dekorasi Background Berkilau -->
+        <div class="absolute top-[-100px] left-[-100px] w-64 h-64 bg-blue-600 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob"></div>
+        <div class="absolute bottom-[-100px] right-[-100px] w-64 h-64 bg-purple-600 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+
+        <div class="max-w-sm w-full bg-white rounded-3xl shadow-2xl p-8 relative z-10">
+            <div class="flex justify-center mb-4">
+                <div class="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center text-white shadow-lg">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"></path></svg>
+                </div>
+            </div>
+            <h2 class="text-2xl font-extrabold text-center text-gray-800 mb-6">Portal Panitia</h2>
+            
             <form id="form-admin-login">
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                    <input type="password" id="admin-password" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Masukkan password (admin123)" required>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Username</label>
+                    <input type="text" id="admin-username" class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors" placeholder="Masukkan username..." required>
                 </div>
-                <button type="submit" class="w-full bg-blue-600 text-white rounded-lg py-2 font-medium hover:bg-blue-700">Masuk Dashboard</button>
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Password</label>
+                    <input type="password" id="admin-password" class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors" placeholder="••••••••" required>
+                </div>
+                <button type="submit" id="btn-admin-login" class="w-full bg-gray-900 text-white rounded-xl py-3 font-bold hover:bg-gray-800 shadow-md transition-transform active:scale-95 flex justify-center items-center">
+                    Masuk Sistem
+                </button>
             </form>
-            <div class="mt-4 text-center">
-                <button onclick="switchView('view-main')" class="text-sm text-gray-500 hover:text-gray-800">Kembali ke Pendaftaran</button>
+
+            <div class="mt-6 text-center">
+                <button onclick="switchView('view-main')" class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors">← Batal & Kembali</button>
             </div>
         </div>
     </div>
 
+    <!-- 4. VIEW: ADMIN DASHBOARD -->
     <div id="view-admin-dashboard" class="view-section hidden min-h-screen bg-gray-100 no-print">
         
         <nav class="bg-white shadow-sm border-b fixed top-0 w-full z-40">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
                     <div class="flex items-center">
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center mr-3 hidden sm:flex">
-                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
+                        <div class="w-8 h-8 rounded-lg bg-gray-900 flex items-center justify-center mr-3 hidden sm:flex shadow-sm text-white font-bold text-xs">
+                            FR
                         </div>
-                        <h1 class="text-xl font-bold text-gray-800">Dashboard Fun Run</h1>
+                        <h1 class="text-lg sm:text-xl font-extrabold text-gray-800">Panitia Dashboard <span id="badge-role" class="ml-2 text-[10px] bg-green-100 text-green-700 px-2 py-1 rounded-full uppercase tracking-widest align-middle">ADMIN</span></h1>
                     </div>
                     
                     <div class="hidden sm:flex items-center space-x-3">
-                        <button onclick="renderDashboard()" class="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center px-3 py-2">
+                        <button onclick="renderDashboard()" class="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center px-3 py-2 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
                             Refresh Data
                         </button>
                         
-                        <button onclick="startScanner()" class="inline-flex items-center px-4 py-2 rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                        <button onclick="startScanner()" class="inline-flex items-center px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-transform active:scale-95">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><rect x="7" y="7" width="10" height="10" rx="1"></rect></svg>
                             <span class="ml-2">Scan QR</span>
                         </button>
 
-                        <button onclick="renderAndSwitchToPrint()" class="inline-flex items-center px-4 py-2 rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors">
+                        <!-- Tombol Cetak disembunyikan untuk Admin biasa -->
+                        <button onclick="renderAndSwitchToPrint()" class="btn-print-bib hidden items-center px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 transition-transform active:scale-95">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                             <span class="ml-2">Cetak Semua BIB</span>
                         </button>
                         
-                        <button onclick="switchView('view-main')" class="text-sm text-red-600 font-medium hover:text-red-800 ml-4 px-3 py-2">
+                        <button onclick="logoutAdmin()" class="text-sm font-bold text-red-600 bg-red-50 hover:bg-red-100 rounded-xl ml-4 px-4 py-2 transition-colors">
                             Logout
                         </button>
                     </div>
 
                     <div class="sm:hidden flex items-center">
-                        <button onclick="renderDashboard()" class="text-blue-600 hover:text-blue-800 p-2 rounded-full bg-blue-50">
+                        <button onclick="renderDashboard()" class="text-blue-600 hover:text-blue-800 p-2 rounded-full bg-blue-50 shadow-sm active:scale-90 transition-transform">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
                         </button>
                     </div>
@@ -208,42 +235,43 @@
         </nav>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-24 sm:pb-8">
+            <!-- Statistik Cards dengan Efek Melayang -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500 relative overflow-hidden">
-                    <p class="text-xs sm:text-sm font-medium text-gray-500 uppercase">Total Pendaftar</p>
-                    <p id="stat-total" class="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900">0</p>
-                    <div class="absolute right-[-10px] bottom-[-10px] opacity-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                <div class="animate-float bg-white rounded-2xl shadow-md p-6 border-l-8 border-blue-500 relative overflow-hidden">
+                    <p class="text-xs sm:text-sm font-bold text-gray-400 uppercase tracking-widest">Total Pendaftar</p>
+                    <p id="stat-total" class="mt-2 text-4xl sm:text-5xl font-black text-gray-800 drop-shadow-sm">0</p>
+                    <div class="absolute right-[-15px] bottom-[-15px] opacity-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                     </div>
                 </div>
-                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-indigo-500">
-                    <p class="text-xs sm:text-sm font-medium text-gray-500 uppercase">Laki-laki</p>
-                    <p class="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900 flex items-center">
+                <div class="animate-float delay-100 bg-white rounded-2xl shadow-md p-6 border-l-8 border-indigo-500">
+                    <p class="text-xs sm:text-sm font-bold text-gray-400 uppercase tracking-widest">Laki-laki</p>
+                    <p class="mt-2 text-4xl sm:text-5xl font-black text-gray-800 drop-shadow-sm flex items-center">
                         <span id="stat-male">0</span> 
-                        <span class="ml-2 text-indigo-500">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="14" r="5"/><line x1="13.5" y1="10.5" x2="21" y2="3"/><line x1="16" y1="3" x2="21" y2="3"/><line x1="21" y1="3" x2="21" y2="8"/></svg>
+                        <span class="ml-3 bg-indigo-100 p-2 rounded-full text-indigo-600">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="10" cy="14" r="5"/><line x1="13.5" y1="10.5" x2="21" y2="3"/><line x1="16" y1="3" x2="21" y2="3"/><line x1="21" y1="3" x2="21" y2="8"/></svg>
                         </span>
                     </p>
                 </div>
-                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-pink-500">
-                    <p class="text-xs sm:text-sm font-medium text-gray-500 uppercase">Perempuan</p>
-                    <p class="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900 flex items-center">
+                <div class="animate-float delay-200 bg-white rounded-2xl shadow-md p-6 border-l-8 border-pink-500">
+                    <p class="text-xs sm:text-sm font-bold text-gray-400 uppercase tracking-widest">Perempuan</p>
+                    <p class="mt-2 text-4xl sm:text-5xl font-black text-gray-800 drop-shadow-sm flex items-center">
                         <span id="stat-female">0</span> 
-                        <span class="ml-2 text-pink-500">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="5"/><line x1="12" y1="14" x2="12" y2="22"/><line x1="9" y1="19" x2="15" y2="19"/></svg>
+                        <span class="ml-3 bg-pink-100 p-2 rounded-full text-pink-600">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="9" r="5"/><line x1="12" y1="14" x2="12" y2="22"/><line x1="9" y1="19" x2="15" y2="19"/></svg>
                         </span>
                     </p>
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
-                <div class="p-4 sm:p-6 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white">
-                    <h2 class="text-lg font-bold text-gray-800">Data Peserta</h2>
+            <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
+                <div class="p-5 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <h2 class="text-lg font-extrabold text-gray-800">Tabel Peserta</h2>
                     <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                         </div>
-                        <input type="text" id="search-input" placeholder="Cari Nama / No WA / BIB..." class="pl-10 pr-4 py-2 border border-gray-200 bg-gray-50 rounded-lg w-full sm:w-64 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-all">
+                        <input type="text" id="search-input" placeholder="Cari Nama / No WA / BIB..." class="pl-11 pr-4 py-3 border border-gray-200 bg-gray-50 rounded-xl w-full sm:w-72 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium text-sm transition-all shadow-sm">
                     </div>
                 </div>
                 
@@ -251,91 +279,91 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">BIB Number</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Nama Peserta</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">No. WhatsApp</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider text-center">L/P</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Alamat</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Waktu Daftar</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-widest">BIB Number</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-widest">Nama Peserta</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-widest">No. WhatsApp</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-widest text-center">L/P</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-widest">Alamat</th>
                             </tr>
                         </thead>
                         <tbody id="table-body" class="bg-white divide-y divide-gray-100">
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 sm:hidden flex justify-between px-2 pb-safe shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+        <!-- BOTTOM NAV MOBILE -->
+        <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 sm:hidden flex justify-between px-2 pb-safe shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
             
             <button onclick="startScanner()" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-blue-600 active:bg-blue-50 transition-colors rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><rect x="7" y="7" width="10" height="10" rx="1"></rect></svg>
-                <span class="text-[10px] font-semibold tracking-wide">Scan QR</span>
+                <span class="text-[10px] font-bold tracking-wider">Scan QR</span>
             </button>
 
-            <button onclick="renderAndSwitchToPrint()" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-green-600 active:bg-green-50 transition-colors rounded-lg">
+            <!-- Disembunyikan secara default, dimunculkan oleh JS jika superadmin -->
+            <button onclick="renderAndSwitchToPrint()" class="btn-print-bib hidden flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-green-600 active:bg-green-50 transition-colors rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                <span class="text-[10px] font-semibold tracking-wide">Cetak BIB</span>
+                <span class="text-[10px] font-bold tracking-wider">Cetak BIB</span>
             </button>
             
-            <button onclick="switchView('view-main')" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-red-500 active:bg-red-50 transition-colors rounded-lg">
+            <button onclick="logoutAdmin()" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-red-500 active:bg-red-50 transition-colors rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                <span class="text-[10px] font-semibold tracking-wide">Keluar</span>
+                <span class="text-[10px] font-bold tracking-wider">Keluar</span>
             </button>
-
         </div>
     </div>
 
+    <!-- 5. VIEW: PRINT BIB -->
     <div id="view-print-bib" class="view-section hidden bg-gray-200 min-h-screen py-8 print:py-0 print:bg-white relative">
         <div class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-4 rounded-full shadow-2xl flex items-center space-x-6 z-50 no-print">
             <span class="font-medium text-sm hidden md:inline">Mode Cetak A4 (2 BIB per halaman)</span>
-            <button onclick="window.print()" class="bg-green-500 hover:bg-green-400 text-gray-900 px-4 py-2 rounded-lg font-bold flex items-center">
+            <button onclick="window.print()" class="bg-green-500 hover:bg-green-400 text-gray-900 px-5 py-2 rounded-lg font-bold flex items-center transition-transform active:scale-95">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                 <span class="ml-2">Cetak Sekarang</span>
             </button>
-            <button onclick="switchView('view-admin-dashboard')" class="text-gray-300 hover:text-white text-sm font-medium underline">
+            <button onclick="switchView('view-admin-dashboard')" class="text-gray-300 hover:text-white text-sm font-bold underline">
                 Tutup & Kembali
             </button>
         </div>
 
-        <div id="print-area">
-            </div>
+        <div id="print-area"></div>
     </div>
 
+    <!-- 6. VIEW: ADMIN SCANNER QR -->
     <div id="view-admin-scanner" class="view-section hidden min-h-screen bg-gray-900 sm:py-10 sm:px-4 flex items-center justify-center">
-        <div class="w-full sm:max-w-md h-screen sm:h-auto bg-white sm:rounded-2xl shadow-2xl flex flex-col relative">
-            <div class="bg-gray-800 py-4 px-6 flex justify-between items-center text-white sm:rounded-t-2xl">
-                <h3 class="font-bold text-lg flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+        <div class="w-full sm:max-w-md h-screen sm:h-auto bg-white sm:rounded-3xl shadow-2xl flex flex-col relative overflow-hidden">
+            <div class="bg-gray-800 py-5 px-6 flex justify-between items-center text-white sm:rounded-t-3xl">
+                <h3 class="font-bold text-lg flex items-center tracking-wide">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
                     Verifikasi Tiket
                 </h3>
-                <button onclick="closeScanner()" class="text-gray-300 hover:text-white bg-gray-700 p-2 rounded-full">
+                <button onclick="closeScanner()" class="text-gray-300 hover:text-white bg-gray-700 p-2 rounded-full transition-transform active:scale-90">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
             
             <div class="p-6 text-center flex-grow flex flex-col justify-center">
-                <p id="scanner-helper" class="text-gray-500 mb-4 text-sm">Arahkan kamera ke QR Code peserta.</p>
+                <p id="scanner-helper" class="text-gray-500 mb-6 font-medium">Arahkan kamera ke QR Code peserta.</p>
 
-                <div id="qr-reader" class="mx-auto w-full max-w-sm rounded-xl overflow-hidden border-4 border-gray-100 shadow-inner bg-gray-50"></div>
+                <div id="qr-reader" class="mx-auto w-full max-w-sm rounded-2xl overflow-hidden border-[6px] border-blue-50 shadow-inner bg-gray-50"></div>
                 
-                <div id="qr-result" class="hidden animate-fade-in pt-2">
-                    </div>
+                <div id="qr-result" class="hidden animate-fade-in pt-2"></div>
             </div>
         </div>
     </div>
 
+    <!-- JAVASCRIPT LOGIC -->
     <script>
         // =========================================================================
         // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI BAWAH INI
-        // (Pastikan URL diakhiri dengan "/exec")
         // =========================================================================
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyNiPni0w4Z-LhmOR6JtUNSbYgmBcEV6NBLWJTpL3d2lsMPFbCwaAvNVIotVPJXmwPH/exec'; 
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbziKZ59Kb3YmUHfmCkqXjsl1TjOEwy5JiEEF4yrraLQxV24knE0qUvahE3geBG1C-C3/exec'; 
 
-        // Data Utama Global
         let registrations = [];
         let isChecking = true; 
         let html5QrcodeScanner = null; 
+        let currentAdminRole = ''; // Menyimpan role login admin/superadmin
 
         window.onload = function() {
             if(SCRIPT_URL.includes('/edit')) {
@@ -343,7 +371,6 @@
             }
         };
 
-        // Fungsi Reset Form kembali ke keadaan awal (hanya WA)
         function resetSmartForm() {
             isChecking = true;
             document.getElementById('form-smart').reset();
@@ -363,9 +390,7 @@
             document.getElementById('reg-address').required = false;
         }
 
-        // Fungsi Pindah View Utama (DIPERBAIKI UNTUK CSS PRINT)
         function switchView(viewId) {
-            // Jika mematikan scanner view, pastikan kamera dimatikan
             if (viewId !== 'view-admin-scanner' && html5QrcodeScanner) {
                 html5QrcodeScanner.clear().catch(e => console.log(e));
             }
@@ -388,7 +413,12 @@
             }
         }
 
-        // Tampilkan Notifikasi
+        function logoutAdmin() {
+            currentAdminRole = '';
+            document.getElementById('admin-password').value = '';
+            switchView('view-main');
+        }
+
         function showNotification(message) {
             const notifBar = document.getElementById('notification-bar');
             notifBar.textContent = message;
@@ -396,7 +426,6 @@
             setTimeout(() => { notifBar.classList.add('hidden'); }, 5000);
         }
 
-        // Fungsi Bantuan Error Khusus Google Apps Script
         function showGasError(errorContext, errorMessage) {
             console.error(`Detail Error ${errorContext}:`, errorMessage);
             let msg = `⛔ KONEKSI DIBLOKIR OLEH GOOGLE (Failed to fetch)\n\n`;
@@ -408,7 +437,6 @@
             alert(msg);
         }
 
-        // Memuat QR Code & Data Tiket ke Layar
         function showTicketData(data, title) {
             document.getElementById('success-title').textContent = title;
             const qrData = encodeURIComponent(`BIB:${data.bibNumber}|Nama:${data.name}|WA:${data.wa}`);
@@ -422,17 +450,17 @@
             switchView('view-success');
         }
 
-        // Handler SMART FORM (Menyatukan Cek WA dan Pendaftaran)
+        // Handler SMART FORM Pendaftaran/Cek Tiket
         document.getElementById('form-smart').addEventListener('submit', async function(e) {
             e.preventDefault();
-            if (SCRIPT_URL === 'MASUKKAN_URL_WEB_APP_ANDA_DISINI' || SCRIPT_URL === '') { alert("PENTING: Anda belum memasukkan SCRIPT_URL!"); return; }
+            if (SCRIPT_URL === 'MASUKKAN_URL_WEB_APP_ANDA_DISINI' || SCRIPT_URL === '') { alert("PENTING: SCRIPT_URL belum dimasukkan!"); return; }
 
             const wa = document.getElementById('reg-wa').value;
             const btnSubmit = document.getElementById('btn-submit-smart');
             const originalBtnText = btnSubmit.innerHTML;
             
             if (isChecking) {
-                // FASE 1: CEK NOMOR WA
+                // FASE 1
                 btnSubmit.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Memeriksa...`;
                 btnSubmit.disabled = true;
 
@@ -473,7 +501,7 @@
                 }
 
             } else {
-                // FASE 2: PROSES PENYIMPANAN PENDAFTARAN BARU
+                // FASE 2
                 const name = document.getElementById('reg-name').value;
                 const address = document.getElementById('reg-address').value;
                 const genderRadio = document.querySelector('input[name="gender"]:checked');
@@ -506,27 +534,71 @@
             }
         });
 
-        // Handler Admin Login
-        document.getElementById('form-admin-login').addEventListener('submit', function(e) {
+        // Handler Admin Login Multi-Role (Ke Google Sheets)
+        document.getElementById('form-admin-login').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const password = document.getElementById('admin-password').value;
-            if (password === 'admin123') {
-                document.getElementById('admin-password').value = '';
-                switchView('view-admin-dashboard');
-            } else {
-                alert('Password salah!');
+            if (SCRIPT_URL === 'MASUKKAN_URL_WEB_APP_ANDA_DISINI' || SCRIPT_URL === '') { alert("PENTING: SCRIPT_URL belum dimasukkan!"); return; }
+
+            const userVal = document.getElementById('admin-username').value;
+            const passVal = document.getElementById('admin-password').value;
+            
+            const btnSubmit = document.getElementById('btn-admin-login');
+            const originalBtnText = btnSubmit.innerHTML;
+            btnSubmit.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Memverifikasi...`;
+            btnSubmit.disabled = true;
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST', mode: 'cors', redirect: 'follow',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'login', username: userVal, password: passVal })
+                });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    currentAdminRole = result.role; // Menyimpan status role 'superadmin' atau 'admin'
+                    
+                    // Update Teks Label Role di Dashboard
+                    document.getElementById('badge-role').textContent = currentAdminRole.toUpperCase();
+                    
+                    // Atur Tombol Print BIB berdasarkan role
+                    const printBtns = document.querySelectorAll('.btn-print-bib');
+                    printBtns.forEach(btn => {
+                        if(currentAdminRole === 'superadmin') {
+                            btn.classList.remove('hidden');
+                            // Karena button desktop butuh inline-flex dan mobile butuh flex
+                            if(btn.parentElement.classList.contains('sm:hidden')) {
+                                btn.classList.add('flex');
+                            } else {
+                                btn.classList.add('inline-flex');
+                            }
+                        } else {
+                            btn.classList.add('hidden');
+                            btn.classList.remove('flex', 'inline-flex');
+                        }
+                    });
+
+                    document.getElementById('admin-password').value = '';
+                    switchView('view-admin-dashboard');
+                } else {
+                    alert(result.message);
+                }
+            } catch (error) {
+                showGasError("LOGIN", error.message);
+            } finally {
+                btnSubmit.innerHTML = originalBtnText;
+                btnSubmit.disabled = false;
             }
         });
 
-        // Handler Pencarian di Dashboard
+        // Dashboard & Tables
         document.getElementById('search-input').addEventListener('input', function() {
             renderTable(this.value);
         });
 
-        // Render Dashboard (Ambil Data dari Google Sheets)
         async function renderDashboard() {
             const tbody = document.getElementById('table-body');
-            tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-sm text-gray-500"><svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Menarik Data Sheets...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-gray-500"><svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Menarik Data Sheets...</td></tr>`;
             
             try {
                 const response = await fetch(SCRIPT_URL, {
@@ -550,11 +622,10 @@
 
                     renderTable('');
                 } else {
-                    tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-sm text-red-500">Error: ${result.message}</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-red-500">Error: ${result.message}</td></tr>`;
                 }
             } catch (error) {
-                console.error("Detail Error Admin:", error);
-                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-sm text-red-500">Gagal mengambil data. Pastikan URL GS benar.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-red-500">Gagal mengambil data. Pastikan URL GS benar.</td></tr>`;
             }
         }
 
@@ -570,7 +641,7 @@
             );
 
             if (filteredData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-sm text-gray-500">Belum ada data pendaftar.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-gray-500">Belum ada data pendaftar.</td></tr>`;
                 return;
             }
 
@@ -588,18 +659,15 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${reg.wa || '-'}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-center">${genderSpan}</td>
                     <td class="px-6 py-4 text-sm text-gray-500 truncate max-w-xs" title="${reg.address || ''}">${reg.address || '-'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-400">${reg.timestamp || '-'}</td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
         // ==========================================
-        // FITUR BARU: QR CODE SCANNER (ADMIN)
+        // QR CODE SCANNER
         // ==========================================
-        
         function startScanner() {
-            // HAPUS PEMBLOKIRAN length === 0 (Admin tetap bisa buka scanner walau data 0)
             switchView('view-admin-scanner');
             document.getElementById('qr-reader').classList.remove('hidden');
             document.getElementById('qr-result').classList.add('hidden');
@@ -689,7 +757,7 @@
         }
 
         function onScanFailure(error) { 
-            // Abaikan error frame pembacaan agar console browser tidak lag
+            // Silent error untuk fps kamera
         }
 
         function restartScanner() {
@@ -703,8 +771,16 @@
             switchView('view-admin-dashboard');
         }
 
-        // Render Halaman Cetak BIB
+        // ==========================================
+        // RENDER HALAMAN PRINT BIB (KHUSUS SUPERADMIN)
+        // ==========================================
         function renderAndSwitchToPrint() {
+            // Cegah Admin Biasa
+            if(currentAdminRole !== 'superadmin') {
+                alert("Maaf, hak akses ini hanya untuk Superadmin.");
+                return;
+            }
+
             const printArea = document.getElementById('print-area');
             printArea.innerHTML = '';
 
@@ -726,7 +802,7 @@
                             <div class="absolute top-0 left-0 w-full h-4 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
                             <div class="absolute bottom-0 left-0 w-full h-4 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
                             
-                            <h1 class="text-3xl font-extrabold tracking-widest text-gray-800 uppercase mb-6">FUN RUN 2026</h1>
+                            <h1 class="text-3xl font-extrabold tracking-widest text-gray-800 uppercase mb-6 text-center">HARDIKNAS FUN RUN 2026<br><span class="text-xl">DAMPELAS</span></h1>
                             
                             <div class="text-[120px] font-black leading-none text-blue-600 mb-6 tracking-tighter">
                                 ${bibNumberOnly}
