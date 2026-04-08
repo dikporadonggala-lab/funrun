@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pendaftaran Fun Run 2026</title>
-    <!-- Menggunakan Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Library QR Code Scanner -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     
     <style>
@@ -47,16 +45,16 @@
             50% { background-color: #16a34a; }
         }
         .animate-pulse-bg { animation: pulse-bg 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        
+        /* Penyesuaian Bottom Nav untuk iPhone Safari (Safe Area) */
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
     </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800">
 
-    <!-- Tempat Notifikasi (Global) -->
     <div id="notification-bar" class="fixed top-0 left-0 w-full text-white text-sm p-3 text-center animate-pulse-bg z-50 hidden shadow-md font-medium">
-        <!-- Pesan Notifikasi -->
-    </div>
+        </div>
 
-    <!-- 1. VIEW: MAIN (SMART FORM) -->
     <div id="view-main" class="view-section active min-h-screen py-10 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
         <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden relative">
             <div class="bg-gradient-to-r from-blue-600 to-indigo-700 py-6 px-8 text-center">
@@ -65,14 +63,12 @@
             </div>
             
             <form id="form-smart" class="p-8 space-y-6">
-                <!-- STEP 1: Nomor WA -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Nomor WhatsApp</label>
                     <input type="tel" id="reg-wa" required class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-3 px-4 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-lg font-semibold tracking-wide transition-colors" placeholder="081234567890">
                     <p id="wa-help-text" class="text-xs text-gray-500 mt-2">*Masukkan No. WA untuk mendaftar baru atau melihat tiket Anda.</p>
                 </div>
 
-                <!-- STEP 2: Detail Pendaftaran (Tersembunyi secara default) -->
                 <div id="step-2-details" class="hidden space-y-6 pt-6 border-t border-gray-100 animate-fade-in">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
@@ -86,7 +82,6 @@
                                 <input type="radio" name="gender" value="Laki-laki" class="peer sr-only">
                                 <div class="flex flex-col items-center justify-center py-4 border-2 border-gray-200 rounded-xl peer-checked:border-blue-500 peer-checked:bg-blue-50 text-gray-600 peer-checked:text-blue-600 transition-all hover:bg-gray-50">
                                     <div class="w-16 h-16 mb-2 rounded-full bg-blue-100 flex items-center justify-center shadow-inner border border-blue-200">
-                                        <!-- Sporty SVG Icon: Male Runner -->
                                         <svg class="w-9 h-9 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
                                     </div>
                                     <span class="text-sm font-bold">Laki-laki</span>
@@ -96,7 +91,6 @@
                                 <input type="radio" name="gender" value="Perempuan" class="peer sr-only">
                                 <div class="flex flex-col items-center justify-center py-4 border-2 border-gray-200 rounded-xl peer-checked:border-pink-500 peer-checked:bg-pink-50 text-gray-600 peer-checked:text-pink-600 transition-all hover:bg-gray-50">
                                     <div class="w-16 h-16 mb-2 rounded-full bg-pink-100 flex items-center justify-center shadow-inner border border-pink-200">
-                                        <!-- Sporty SVG Icon: Female Runner (Mirrored for distinction) -->
                                         <svg class="w-9 h-9 text-pink-500" fill="currentColor" viewBox="0 0 24 24" style="transform: scaleX(-1);"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
                                     </div>
                                     <span class="text-sm font-bold">Perempuan</span>
@@ -124,7 +118,6 @@
         </div>
     </div>
 
-    <!-- 2. VIEW: SUCCESS (TIKET) -->
     <div id="view-success" class="view-section hidden min-h-screen py-10 px-4 flex items-center justify-center">
         <div class="max-w-sm w-full bg-white rounded-2xl shadow-xl overflow-hidden text-center p-8 border-t-8 border-green-500">
             <div class="flex justify-center mb-4 no-print">
@@ -156,7 +149,6 @@
         </div>
     </div>
 
-    <!-- 3. VIEW: ADMIN LOGIN -->
     <div id="view-admin-login" class="view-section hidden min-h-screen bg-gray-800 flex items-center justify-center px-4">
         <div class="max-w-sm w-full bg-white rounded-xl shadow-2xl p-8">
             <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Admin Panel</h2>
@@ -173,49 +165,60 @@
         </div>
     </div>
 
-    <!-- 4. VIEW: ADMIN DASHBOARD -->
     <div id="view-admin-dashboard" class="view-section hidden min-h-screen bg-gray-100 no-print">
-        <!-- Navbar -->
-        <nav class="bg-white shadow-sm border-b">
+        
+        <nav class="bg-white shadow-sm border-b fixed top-0 w-full z-40">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
                     <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center mr-3 hidden sm:flex">
+                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
+                        </div>
                         <h1 class="text-xl font-bold text-gray-800">Dashboard Fun Run</h1>
                     </div>
-                    <div class="flex items-center space-x-2 sm:space-x-4">
-                        <button onclick="renderDashboard()" class="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center hidden sm:flex">
+                    
+                    <div class="hidden sm:flex items-center space-x-3">
+                        <button onclick="renderDashboard()" class="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center px-3 py-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-                            Refresh
+                            Refresh Data
                         </button>
                         
-                        <!-- TOMBOL BARU: SCAN QR PESERTA -->
-                        <button onclick="startScanner()" class="inline-flex items-center px-3 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                        <button onclick="startScanner()" class="inline-flex items-center px-4 py-2 rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><rect x="7" y="7" width="10" height="10" rx="1"></rect></svg>
-                            <span class="ml-2 hidden sm:inline">Scan QR</span>
+                            <span class="ml-2">Scan QR</span>
                         </button>
 
-                        <button onclick="renderAndSwitchToPrint()" class="inline-flex items-center px-3 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">
+                        <button onclick="renderAndSwitchToPrint()" class="inline-flex items-center px-4 py-2 rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                            <span class="ml-2 hidden sm:inline">Cetak Semua BIB</span>
+                            <span class="ml-2">Cetak Semua BIB</span>
                         </button>
-                        <button onclick="switchView('view-main')" class="text-sm text-red-600 font-medium hover:text-red-800 ml-2">
+                        
+                        <button onclick="switchView('view-main')" class="text-sm text-red-600 font-medium hover:text-red-800 ml-4 px-3 py-2">
                             Logout
+                        </button>
+                    </div>
+
+                    <div class="sm:hidden flex items-center">
+                        <button onclick="renderDashboard()" class="text-blue-600 hover:text-blue-800 p-2 rounded-full bg-blue-50">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
                         </button>
                     </div>
                 </div>
             </div>
         </nav>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <!-- Statistik Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500">
-                    <p class="text-sm font-medium text-gray-500 uppercase">Total Pendaftar</p>
-                    <p id="stat-total" class="mt-2 text-4xl font-extrabold text-gray-900">0</p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-24 sm:pb-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500 relative overflow-hidden">
+                    <p class="text-xs sm:text-sm font-medium text-gray-500 uppercase">Total Pendaftar</p>
+                    <p id="stat-total" class="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900">0</p>
+                    <div class="absolute right-[-10px] bottom-[-10px] opacity-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    </div>
                 </div>
                 <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-indigo-500">
-                    <p class="text-sm font-medium text-gray-500 uppercase">Laki-laki</p>
-                    <p class="mt-2 text-4xl font-extrabold text-gray-900 flex items-center">
+                    <p class="text-xs sm:text-sm font-medium text-gray-500 uppercase">Laki-laki</p>
+                    <p class="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900 flex items-center">
                         <span id="stat-male">0</span> 
                         <span class="ml-2 text-indigo-500">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="14" r="5"/><line x1="13.5" y1="10.5" x2="21" y2="3"/><line x1="16" y1="3" x2="21" y2="3"/><line x1="21" y1="3" x2="21" y2="8"/></svg>
@@ -223,8 +226,8 @@
                     </p>
                 </div>
                 <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-pink-500">
-                    <p class="text-sm font-medium text-gray-500 uppercase">Perempuan</p>
-                    <p class="mt-2 text-4xl font-extrabold text-gray-900 flex items-center">
+                    <p class="text-xs sm:text-sm font-medium text-gray-500 uppercase">Perempuan</p>
+                    <p class="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900 flex items-center">
                         <span id="stat-female">0</span> 
                         <span class="ml-2 text-pink-500">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="5"/><line x1="12" y1="14" x2="12" y2="22"/><line x1="9" y1="19" x2="15" y2="19"/></svg>
@@ -233,15 +236,14 @@
                 </div>
             </div>
 
-            <!-- Tabel Data -->
-            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                <div class="p-6 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+                <div class="p-4 sm:p-6 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white">
                     <h2 class="text-lg font-bold text-gray-800">Data Peserta</h2>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                         </div>
-                        <input type="text" id="search-input" placeholder="Cari Nama / No WA..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full sm:w-64 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                        <input type="text" id="search-input" placeholder="Cari Nama / No WA / BIB..." class="pl-10 pr-4 py-2 border border-gray-200 bg-gray-50 rounded-lg w-full sm:w-64 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-all">
                     </div>
                 </div>
                 
@@ -249,26 +251,42 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">BIB Number</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Peserta</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No. WhatsApp</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">L/P</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Alamat</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Waktu Daftar</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">BIB Number</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Nama Peserta</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">No. WhatsApp</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider text-center">L/P</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Alamat</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Waktu Daftar</th>
                             </tr>
                         </thead>
-                        <tbody id="table-body" class="bg-white divide-y divide-gray-200">
-                            <!-- Data baris dirender lewat JavaScript -->
-                        </tbody>
+                        <tbody id="table-body" class="bg-white divide-y divide-gray-100">
+                            </tbody>
                     </table>
                 </div>
             </div>
         </div>
+
+        <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 sm:hidden flex justify-between px-2 pb-safe shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+            
+            <button onclick="startScanner()" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-blue-600 active:bg-blue-50 transition-colors rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><rect x="7" y="7" width="10" height="10" rx="1"></rect></svg>
+                <span class="text-[10px] font-semibold tracking-wide">Scan QR</span>
+            </button>
+
+            <button onclick="renderAndSwitchToPrint()" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-green-600 active:bg-green-50 transition-colors rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                <span class="text-[10px] font-semibold tracking-wide">Cetak BIB</span>
+            </button>
+            
+            <button onclick="switchView('view-main')" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-red-500 active:bg-red-50 transition-colors rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <span class="text-[10px] font-semibold tracking-wide">Keluar</span>
+            </button>
+
+        </div>
     </div>
 
-    <!-- 5. VIEW: PRINT BIB -->
     <div id="view-print-bib" class="view-section hidden bg-gray-200 min-h-screen py-8 print:py-0 print:bg-white relative">
-        <!-- Toolbar Print -->
         <div class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-4 rounded-full shadow-2xl flex items-center space-x-6 z-50 no-print">
             <span class="font-medium text-sm hidden md:inline">Mode Cetak A4 (2 BIB per halaman)</span>
             <button onclick="window.print()" class="bg-green-500 hover:bg-green-400 text-gray-900 px-4 py-2 rounded-lg font-bold flex items-center">
@@ -280,35 +298,33 @@
             </button>
         </div>
 
-        <!-- Area Cetak yang akan di-inject script -->
         <div id="print-area">
-            <!-- Halaman A4 Render dari JS -->
-        </div>
+            </div>
     </div>
 
-    <!-- 6. VIEW: ADMIN SCANNER QR (BARU) -->
-    <div id="view-admin-scanner" class="view-section hidden min-h-screen bg-gray-900 py-10 px-4 flex items-center justify-center">
-        <div class="max-w-md w-full bg-white rounded-2xl shadow-2xl overflow-hidden relative">
-            <div class="bg-gray-800 py-4 px-6 flex justify-between items-center text-white">
-                <h3 class="font-bold text-lg">Verifikasi Tiket Peserta</h3>
-                <button onclick="closeScanner()" class="text-gray-300 hover:text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    <div id="view-admin-scanner" class="view-section hidden min-h-screen bg-gray-900 sm:py-10 sm:px-4 flex items-center justify-center">
+        <div class="w-full sm:max-w-md h-screen sm:h-auto bg-white sm:rounded-2xl shadow-2xl flex flex-col relative">
+            <div class="bg-gray-800 py-4 px-6 flex justify-between items-center text-white sm:rounded-t-2xl">
+                <h3 class="font-bold text-lg flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+                    Verifikasi Tiket
+                </h3>
+                <button onclick="closeScanner()" class="text-gray-300 hover:text-white bg-gray-700 p-2 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
             
-            <div class="p-6 text-center">
-                <!-- Area Kamera Reader -->
-                <div id="qr-reader" class="mx-auto w-full max-w-sm rounded-lg overflow-hidden border-4 border-gray-100"></div>
+            <div class="p-6 text-center flex-grow flex flex-col justify-center">
+                <p id="scanner-helper" class="text-gray-500 mb-4 text-sm">Arahkan kamera ke QR Code peserta.</p>
+
+                <div id="qr-reader" class="mx-auto w-full max-w-sm rounded-xl overflow-hidden border-4 border-gray-100 shadow-inner bg-gray-50"></div>
                 
-                <!-- Hasil Scan (Muncul ketika sukses/gagal scan) -->
-                <div id="qr-result" class="hidden animate-fade-in pt-4">
-                    <!-- Isinya di-inject dari Javascript -->
-                </div>
+                <div id="qr-result" class="hidden animate-fade-in pt-2">
+                    </div>
             </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
         // =========================================================================
         // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI BAWAH INI
@@ -318,11 +334,9 @@
 
         // Data Utama Global
         let registrations = [];
-        let currentReg = null;
-        let isChecking = true; // State penanda fase form cerdas
-        let html5QrcodeScanner = null; // Instansiasi QR Scanner
+        let isChecking = true; 
+        let html5QrcodeScanner = null; 
 
-        // Cek Keamanan URL (Mengingatkan jika URL masih /edit)
         window.onload = function() {
             if(SCRIPT_URL.includes('/edit')) {
                 alert("PENTING: SCRIPT_URL Anda salah! URL harus berakhiran '/exec', bukan '/edit'.");
@@ -345,20 +359,22 @@
             helpText.textContent = '*Masukkan No. WA untuk mendaftar baru atau melihat tiket Anda.';
             helpText.classList.remove('text-green-600', 'font-medium');
             
-            // Hapus status required sementara dari tahap 2
             document.getElementById('reg-name').required = false;
             document.getElementById('reg-address').required = false;
         }
 
         // Fungsi Pindah View Utama (DIPERBAIKI UNTUK CSS PRINT)
         function switchView(viewId) {
-            // Sembunyikan semua view dan buang class 'active' agar tidak dicetak browser
+            // Jika mematikan scanner view, pastikan kamera dimatikan
+            if (viewId !== 'view-admin-scanner' && html5QrcodeScanner) {
+                html5QrcodeScanner.clear().catch(e => console.log(e));
+            }
+
             document.querySelectorAll('.view-section').forEach(el => {
                 el.classList.add('hidden');
                 el.classList.remove('active');
             });
             
-            // Tampilkan view yang dituju dan tambahkan class 'active'
             const targetView = document.getElementById(viewId);
             targetView.classList.remove('hidden');
             targetView.classList.add('active');
@@ -377,28 +393,24 @@
             const notifBar = document.getElementById('notification-bar');
             notifBar.textContent = message;
             notifBar.classList.remove('hidden');
-            setTimeout(() => {
-                notifBar.classList.add('hidden');
-            }, 5000);
+            setTimeout(() => { notifBar.classList.add('hidden'); }, 5000);
         }
 
-        // Fungsi Bantuan Error Khusus Google Apps Script (Failed to Fetch)
+        // Fungsi Bantuan Error Khusus Google Apps Script
         function showGasError(errorContext, errorMessage) {
             console.error(`Detail Error ${errorContext}:`, errorMessage);
             let msg = `⛔ KONEKSI DIBLOKIR OLEH GOOGLE (Failed to fetch)\n\n`;
             msg += `Silakan cek 4 hal ini:\n`;
             msg += `1. Pastikan SCRIPT_URL berakhiran "/exec" (Bukan /edit).\n`;
-            msg += `2. Apakah Anda pakai email kampus/kantor? Wajib gunakan email @gmail.com biasa.\n`;
-            msg += `3. Apakah Anda sudah Deploy "Versi Baru"? (Hanya save/Ctrl+S tidak cukup).\n`;
-            msg += `4. Pada saat deploy, "Jalankan Sebagai" wajib diatur ke "SAYA (Me)".\n`;
+            msg += `2. Pakai email @gmail.com biasa (Bukan email kampus/kantor).\n`;
+            msg += `3. Lakukan Deploy "Versi Baru".\n`;
+            msg += `4. Jalankan Sebagai wajib "SAYA (Me)".\n`;
             alert(msg);
         }
 
         // Memuat QR Code & Data Tiket ke Layar
         function showTicketData(data, title) {
             document.getElementById('success-title').textContent = title;
-            
-            // Data dalam QR diformat khusus agar mudah dibaca oleh admin scanner
             const qrData = encodeURIComponent(`BIB:${data.bibNumber}|Nama:${data.name}|WA:${data.wa}`);
             const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${qrData}`;
             
@@ -426,19 +438,15 @@
 
                 try {
                     const response = await fetch(SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'cors',
-                        redirect: 'follow',
+                        method: 'POST', mode: 'cors', redirect: 'follow',
                         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                         body: JSON.stringify({ action: 'check', wa: wa })
                     });
                     const result = await response.json();
 
                     if (result.status === 'success') {
-                        // WA DITEMUKAN
                         showTicketData(result.data, "Tiket Anda Ditemukan");
                     } else if (result.status === 'not_found') {
-                        // WA BELUM ADA -> Buka sisa form
                         isChecking = false;
                         document.getElementById('step-2-details').classList.remove('hidden');
                         
@@ -470,16 +478,14 @@
                 const address = document.getElementById('reg-address').value;
                 const genderRadio = document.querySelector('input[name="gender"]:checked');
                 
-                if (!genderRadio) { alert('Pilih Kategori Peserta (Jenis Kelamin) terlebih dahulu!'); return; }
+                if (!genderRadio) { alert('Pilih Kategori Peserta terlebih dahulu!'); return; }
 
                 btnSubmit.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Mendaftarkan...`;
                 btnSubmit.disabled = true;
 
                 try {
                     const response = await fetch(SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'cors',
-                        redirect: 'follow',
+                        method: 'POST', mode: 'cors', redirect: 'follow',
                         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                         body: JSON.stringify({ action: 'register', name: name, wa: wa, address: address, gender: genderRadio.value })
                     });
@@ -520,13 +526,11 @@
         // Render Dashboard (Ambil Data dari Google Sheets)
         async function renderDashboard() {
             const tbody = document.getElementById('table-body');
-            tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-sm text-gray-500"><svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-500 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Memuat data dari Google Sheets...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-sm text-gray-500"><svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Menarik Data Sheets...</td></tr>`;
             
             try {
                 const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'cors',
-                    redirect: 'follow',
+                    method: 'POST', mode: 'cors', redirect: 'follow',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify({ action: 'get_all' })
                 });
@@ -534,7 +538,7 @@
                 const result = await response.json();
                 
                 if (result.status === 'success') {
-                    registrations = result.data; // Simpan data ke memori lokal admin (Penting untuk pencarian & Scan QR)
+                    registrations = result.data; 
                     
                     const total = registrations.length;
                     const totalLaki = registrations.filter(r => r.gender === 'Laki-laki').length;
@@ -550,12 +554,7 @@
                 }
             } catch (error) {
                 console.error("Detail Error Admin:", error);
-                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-sm text-red-500">
-                    <strong>Gagal mengambil data! (Failed to fetch)</strong><br><br>
-                    1. Pastikan URL berakhiran /exec<br>
-                    2. Pastikan Jalankan Sebagai: SAYA (Me)<br>
-                    3. Lakukan Deploy "Versi Baru"
-                </td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-sm text-red-500">Gagal mengambil data. Pastikan URL GS benar.</td></tr>`;
             }
         }
 
@@ -571,25 +570,25 @@
             );
 
             if (filteredData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-sm text-gray-500">Belum ada data pendaftar yang cocok.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-sm text-gray-500">Belum ada data pendaftar.</td></tr>`;
                 return;
             }
 
             filteredData.forEach(reg => {
                 const tr = document.createElement('tr');
-                tr.className = 'hover:bg-gray-50 transition-colors';
+                tr.className = 'hover:bg-blue-50 transition-colors border-b border-gray-50';
                 
                 const genderSpan = reg.gender === 'Laki-laki' 
-                    ? `<span class="text-indigo-600 font-bold">L</span>` 
-                    : `<span class="text-pink-600 font-bold">P</span>`;
+                    ? `<span class="text-indigo-600 font-bold bg-indigo-50 px-2 py-1 rounded-md text-xs">L</span>` 
+                    : `<span class="text-pink-600 font-bold bg-pink-50 px-2 py-1 rounded-md text-xs">P</span>`;
 
                 tr.innerHTML = `
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-blue-600">${reg.bibNumber || '-'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${reg.name || '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-800">${reg.name || '-'}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${reg.wa || '-'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">${genderSpan}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">${genderSpan}</td>
                     <td class="px-6 py-4 text-sm text-gray-500 truncate max-w-xs" title="${reg.address || ''}">${reg.address || '-'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${reg.timestamp || '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-400">${reg.timestamp || '-'}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -599,46 +598,35 @@
         // FITUR BARU: QR CODE SCANNER (ADMIN)
         // ==========================================
         
-        // Memulai Kamera Scanner
         function startScanner() {
-            // Jika data belum diambil, tolak
-            if (registrations.length === 0) {
-                alert("Mohon tunggu sampai data tabel selesai dimuat, atau tekan refresh.");
-                return;
-            }
-            
+            // HAPUS PEMBLOKIRAN length === 0 (Admin tetap bisa buka scanner walau data 0)
             switchView('view-admin-scanner');
             document.getElementById('qr-reader').classList.remove('hidden');
             document.getElementById('qr-result').classList.add('hidden');
+            document.getElementById('scanner-helper').classList.remove('hidden');
             
             if (!html5QrcodeScanner) {
-                // Inisialisasi scanner
                 html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { 
                     fps: 10, 
                     qrbox: {width: 250, height: 250},
                     supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
                 }, false);
             }
-            
-            // Render kamera
             html5QrcodeScanner.render(onScanSuccess, onScanFailure);
         }
 
-        // Fungsi saat QR Code berhasil terdeteksi
         function onScanSuccess(decodedText, decodedResult) {
-            // Hentikan kamera sementara agar tidak terscan ganda
             if (html5QrcodeScanner) html5QrcodeScanner.clear();
 
             document.getElementById('qr-reader').classList.add('hidden');
+            document.getElementById('scanner-helper').classList.add('hidden');
             const resultDiv = document.getElementById('qr-result');
             resultDiv.classList.remove('hidden');
             
-            // Format QR yang dihasilkan sistem kita: BIB:FR-0001|Nama:Budi|WA:0812...
             let scannedBib = "";
             let scannedWa = "";
             
             try {
-                // Ekstrak informasi dari teks QR
                 const parts = decodedText.split('|');
                 parts.forEach(part => {
                     if (part.startsWith("BIB:")) scannedBib = part.replace("BIB:", "");
@@ -646,73 +634,62 @@
                 });
             } catch(e) {}
 
-            // Bersihkan format WA untuk pencocokan (mengabaikan awalan 0/62)
             function cleanStr(str) { return str ? str.replace(/^(\+62|62|0)/, '').replace(/\D/g, '') : ''; }
             const matchWa = cleanStr(scannedWa);
 
-            // Cari di array lokal (registrations) yang sudah ditarik saat admin masuk dashboard
             const validParticipant = registrations.find(r => 
                 (r.bibNumber === scannedBib) || 
                 (cleanStr(r.wa) === matchWa && matchWa !== '')
             );
 
             if (validParticipant) {
-                // Tampilan Sukses / Valid
                 resultDiv.innerHTML = `
                     <div class="text-green-500 mb-2">
-                        <svg class="w-20 h-20 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <svg class="w-20 h-20 mx-auto drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
-                    <h3 class="text-3xl font-extrabold text-green-600 uppercase tracking-widest">Data Valid</h3>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-green-600 uppercase tracking-widest">Data Valid</h3>
                     <p class="text-gray-500 text-sm mt-1">Peserta resmi terdaftar.</p>
                     
-                    <div class="mt-6 bg-gray-50 border border-gray-200 p-5 rounded-xl text-left shadow-inner">
-                        <div class="flex justify-between border-b pb-2 mb-2">
-                            <span class="text-gray-500 text-sm">BIB Number</span>
-                            <span class="font-bold text-blue-600">${validParticipant.bibNumber}</span>
+                    <div class="mt-6 bg-gray-50 border border-gray-200 p-4 rounded-xl text-left shadow-sm">
+                        <div class="flex flex-col border-b pb-2 mb-2">
+                            <span class="text-gray-400 text-xs">BIB Number</span>
+                            <span class="font-black text-xl text-blue-600">${validParticipant.bibNumber}</span>
                         </div>
-                        <div class="flex justify-between border-b pb-2 mb-2">
-                            <span class="text-gray-500 text-sm">Nama Lengkap</span>
-                            <span class="font-bold text-gray-800">${validParticipant.name}</span>
+                        <div class="flex flex-col border-b pb-2 mb-2">
+                            <span class="text-gray-400 text-xs">Nama Lengkap</span>
+                            <span class="font-bold text-gray-800 text-lg">${validParticipant.name}</span>
                         </div>
-                        <div class="flex justify-between border-b pb-2 mb-2">
-                            <span class="text-gray-500 text-sm">No WhatsApp</span>
-                            <span class="font-semibold text-gray-700">${validParticipant.wa}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-500 text-sm">Kategori</span>
-                            <span class="font-bold uppercase ${validParticipant.gender === 'Laki-laki' ? 'text-indigo-600' : 'text-pink-600'}">${validParticipant.gender}</span>
+                        <div class="flex justify-between items-end">
+                            <div class="flex flex-col">
+                                <span class="text-gray-400 text-xs">No WhatsApp</span>
+                                <span class="font-semibold text-gray-700">${validParticipant.wa}</span>
+                            </div>
+                            <span class="font-bold uppercase text-xs px-3 py-1 rounded-full ${validParticipant.gender === 'Laki-laki' ? 'bg-indigo-100 text-indigo-700' : 'bg-pink-100 text-pink-700'}">${validParticipant.gender}</span>
                         </div>
                     </div>
                     
-                    <button onclick="restartScanner()" class="mt-8 w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold shadow-md transition-all">
+                    <button onclick="restartScanner()" class="mt-8 w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white py-3 sm:py-4 rounded-xl font-bold shadow-md transition-all">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 7h10v10H7z"></path></svg>
-                        Scan Peserta Berikutnya
+                        Scan Berikutnya
                     </button>
                 `;
             } else {
-                // Tampilan Gagal / Tidak Ditemukan
                 resultDiv.innerHTML = `
                     <div class="text-red-500 mb-2">
-                        <svg class="w-20 h-20 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <svg class="w-20 h-20 mx-auto drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
-                    <h3 class="text-3xl font-extrabold text-red-600 uppercase tracking-widest">Tidak Valid</h3>
-                    <p class="text-gray-500 mt-2">Data tiket ini tidak ditemukan di dalam database pendaftaran Fun Run.</p>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-red-600 uppercase tracking-widest">Tidak Valid</h3>
+                    <p class="text-gray-500 mt-2 text-sm">Data tiket ini tidak ditemukan di dalam database Fun Run.</p>
                     
-                    <div class="mt-4 bg-red-50 text-red-700 p-3 rounded-lg text-xs text-left border border-red-200">
-                        <p class="font-bold mb-1">Data Terbaca (Mentah):</p>
-                        <p class="break-all font-mono">${decodedText}</p>
-                    </div>
-
-                    <button onclick="restartScanner()" class="mt-8 w-full bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 rounded-xl font-bold transition-all">
+                    <button onclick="restartScanner()" class="mt-8 w-full bg-gray-200 hover:bg-gray-300 active:bg-gray-400 text-gray-800 py-3 rounded-xl font-bold transition-all">
                         Coba Scan Lagi
                     </button>
                 `;
             }
         }
 
-        // Abaikan jika scanner gagal membaca qr dalam 1 frame (wajar terjadi terus menerus)
         function onScanFailure(error) { 
-            // Jangan lakukan console.log agar browser tidak berat
+            // Abaikan error frame pembacaan agar console browser tidak lag
         }
 
         function restartScanner() {
@@ -721,14 +698,12 @@
         
         function closeScanner() {
             if(html5QrcodeScanner) {
-                html5QrcodeScanner.clear().catch(error => {
-                    console.error("Gagal menutup kamera", error);
-                });
+                html5QrcodeScanner.clear().catch(e => console.log(e));
             }
             switchView('view-admin-dashboard');
         }
 
-        // Render Halaman Cetak BIB (Bawaan Admin)
+        // Render Halaman Cetak BIB
         function renderAndSwitchToPrint() {
             const printArea = document.getElementById('print-area');
             printArea.innerHTML = '';
