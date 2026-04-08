@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Fun Run 2026</title>
+    <!-- Menggunakan Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Library QR Code Scanner -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    
+    <style>
+        /* Gaya khusus untuk mode cetak A4 dan Tiket */
+        @media print {
+            @page { size: A4 portrait; margin: 0; }
+            body { margin: 0; background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            .page-break { page-break-after: always; }
+            
+            /* Perbaikan Bug Print: Hanya mencetak view yang benar-benar aktif */
+            .view-section { display: none !important; }
+            .view-section.active { display: block !important; }
+            
+            /* Penyesuaian khusus saat peserta memprint bukti tiket */
+            #view-success .max-w-sm { max-width: 100% !important; border: none; box-shadow: none; margin-top: 2rem;}
+        }
+        
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            margin: 0 auto;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .bib-card {
+            height: 148.5mm; /* Setengah A4 */
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* Animasi Notifikasi */
+        @keyframes pulse-bg {
+            0%, 100% { background-color: #22c55e; }
+            50% { background-color: #16a34a; }
+        }
+        .animate-pulse-bg { animation: pulse-bg 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+    <!-- Tempat Notifikasi (Global) -->
+    <div id="notification-bar" class="fixed top-0 left-0 w-full text-white text-sm p-3 text-center animate-pulse-bg z-50 hidden shadow-md font-medium">
+        <!-- Pesan Notifikasi -->
+    </div>
+
+    <!-- 1. VIEW: MAIN (SMART FORM) -->
+    <div id="view-main" class="view-section active min-h-screen py-10 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+        <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden relative">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-700 py-6 px-8 text-center">
+                <h2 class="text-3xl font-extrabold text-white">Fun Run 2026</h2>
+                <p class="text-blue-100 mt-1">Sistem Pendaftaran & Tiket</p>
+            </div>
+            
+            <form id="form-smart" class="p-8 space-y-6">
+                <!-- STEP 1: Nomor WA -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Nomor WhatsApp</label>
+                    <input type="tel" id="reg-wa" required class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-3 px-4 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-lg font-semibold tracking-wide transition-colors" placeholder="081234567890">
+                    <p id="wa-help-text" class="text-xs text-gray-500 mt-2">*Masukkan No. WA untuk mendaftar baru atau melihat tiket Anda.</p>
+                </div>
+
+                <!-- STEP 2: Detail Pendaftaran (Tersembunyi secara default) -->
+                <div id="step-2-details" class="hidden space-y-6 pt-6 border-t border-gray-100 animate-fade-in">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+                        <input type="text" id="reg-name" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Contoh: Budi Santoso">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Kategori Peserta</label>
+                        <div class="flex gap-4">
+                            <label class="flex-1 cursor-pointer">
+                                <input type="radio" name="gender" value="Laki-laki" class="peer sr-only">
+                                <div class="flex flex-col items-center justify-center py-4 border-2 border-gray-200 rounded-xl peer-checked:border-blue-500 peer-checked:bg-blue-50 text-gray-600 peer-checked:text-blue-600 transition-all hover:bg-gray-50">
+                                    <div class="w-16 h-16 mb-2 rounded-full bg-blue-100 flex items-center justify-center shadow-inner border border-blue-200">
+                                        <!-- Sporty SVG Icon: Male Runner -->
+                                        <svg class="w-9 h-9 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
+                                    </div>
+                                    <span class="text-sm font-bold">Laki-laki</span>
+                                </div>
+                            </label>
+                            <label class="flex-1 cursor-pointer">
+                                <input type="radio" name="gender" value="Perempuan" class="peer sr-only">
+                                <div class="flex flex-col items-center justify-center py-4 border-2 border-gray-200 rounded-xl peer-checked:border-pink-500 peer-checked:bg-pink-50 text-gray-600 peer-checked:text-pink-600 transition-all hover:bg-gray-50">
+                                    <div class="w-16 h-16 mb-2 rounded-full bg-pink-100 flex items-center justify-center shadow-inner border border-pink-200">
+                                        <!-- Sporty SVG Icon: Female Runner (Mirrored for distinction) -->
+                                        <svg class="w-9 h-9 text-pink-500" fill="currentColor" viewBox="0 0 24 24" style="transform: scaleX(-1);"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
+                                    </div>
+                                    <span class="text-sm font-bold">Perempuan</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Alamat Lengkap</label>
+                        <textarea id="reg-address" rows="3" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Jl. Contoh No. 123..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" id="btn-submit-smart" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-base font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all">
+                    Lanjut
+                </button>
+            </form>
+
+            <div class="bg-gray-50 border-t border-gray-100 p-4 text-center">
+                <button onclick="switchView('view-admin-login')" class="text-xs text-gray-500 hover:text-blue-600 font-medium">
+                    Login Admin Panitia
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. VIEW: SUCCESS (TIKET) -->
+    <div id="view-success" class="view-section hidden min-h-screen py-10 px-4 flex items-center justify-center">
+        <div class="max-w-sm w-full bg-white rounded-2xl shadow-xl overflow-hidden text-center p-8 border-t-8 border-green-500">
+            <div class="flex justify-center mb-4 no-print">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800" id="success-title">Pendaftaran Berhasil!</h2>
+            <p class="text-gray-500 mt-2 text-sm no-print">Tunjukkan QR Code ini kepada panitia untuk menukarkan Race Pack / BIB Number Anda.</p>
+            
+            <div class="my-6 p-4 bg-gray-50 rounded-xl border border-gray-100 inline-block">
+                <img id="success-qr" src="" alt="QR Code" class="mx-auto w-48 h-48 rounded-lg shadow-sm bg-white p-2" />
+            </div>
+
+            <div class="bg-blue-50 p-4 rounded-xl mb-6 text-center">
+                <p class="text-sm text-blue-800 font-medium uppercase tracking-wider">BIB Number</p>
+                <p id="success-bib" class="text-4xl font-extrabold text-blue-600 mt-1">FR-0000</p>
+                <p id="success-name" class="text-lg font-bold text-gray-700 mt-2">Nama Peserta</p>
+                <p id="success-gender" class="text-sm text-gray-500 mt-1 uppercase">-</p>
+            </div>
+
+            <div class="space-y-3 no-print">
+                <button onclick="window.print()" class="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    Simpan / Cetak Tiket
+                </button>
+                <button onclick="switchView('view-main')" class="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none">
+                    Kembali ke Beranda
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. VIEW: ADMIN LOGIN -->
+    <div id="view-admin-login" class="view-section hidden min-h-screen bg-gray-800 flex items-center justify-center px-4">
+        <div class="max-w-sm w-full bg-white rounded-xl shadow-2xl p-8">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Admin Panel</h2>
+            <form id="form-admin-login">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" id="admin-password" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Masukkan password (admin123)" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white rounded-lg py-2 font-medium hover:bg-blue-700">Masuk Dashboard</button>
+            </form>
+            <div class="mt-4 text-center">
+                <button onclick="switchView('view-main')" class="text-sm text-gray-500 hover:text-gray-800">Kembali ke Pendaftaran</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. VIEW: ADMIN DASHBOARD -->
+    <div id="view-admin-dashboard" class="view-section hidden min-h-screen bg-gray-100 no-print">
+        <!-- Navbar -->
+        <nav class="bg-white shadow-sm border-b">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <h1 class="text-xl font-bold text-gray-800">Dashboard Fun Run</h1>
+                    </div>
+                    <div class="flex items-center space-x-2 sm:space-x-4">
+                        <button onclick="renderDashboard()" class="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center hidden sm:flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                            Refresh
+                        </button>
+                        
+                        <!-- TOMBOL BARU: SCAN QR PESERTA -->
+                        <button onclick="startScanner()" class="inline-flex items-center px-3 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><rect x="7" y="7" width="10" height="10" rx="1"></rect></svg>
+                            <span class="ml-2 hidden sm:inline">Scan QR</span>
+                        </button>
+
+                        <button onclick="renderAndSwitchToPrint()" class="inline-flex items-center px-3 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                            <span class="ml-2 hidden sm:inline">Cetak Semua BIB</span>
+                        </button>
+                        <button onclick="switchView('view-main')" class="text-sm text-red-600 font-medium hover:text-red-800 ml-2">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Statistik Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500">
+                    <p class="text-sm font-medium text-gray-500 uppercase">Total Pendaftar</p>
+                    <p id="stat-total" class="mt-2 text-4xl font-extrabold text-gray-900">0</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-indigo-500">
+                    <p class="text-sm font-medium text-gray-500 uppercase">Laki-laki</p>
+                    <p class="mt-2 text-4xl font-extrabold text-gray-900 flex items-center">
+                        <span id="stat-male">0</span> 
+                        <span class="ml-2 text-indigo-500">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="14" r="5"/><line x1="13.5" y1="10.5" x2="21" y2="3"/><line x1="16" y1="3" x2="21" y2="3"/><line x1="21" y1="3" x2="21" y2="8"/></svg>
+                        </span>
+                    </p>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-pink-500">
+                    <p class="text-sm font-medium text-gray-500 uppercase">Perempuan</p>
+                    <p class="mt-2 text-4xl font-extrabold text-gray-900 flex items-center">
+                        <span id="stat-female">0</span> 
+                        <span class="ml-2 text-pink-500">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="5"/><line x1="12" y1="14" x2="12" y2="22"/><line x1="9" y1="19" x2="15" y2="19"/></svg>
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tabel Data -->
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <h2 class="text-lg font-bold text-gray-800">Data Peserta</h2>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </div>
+                        <input type="text" id="search-input" placeholder="Cari Nama / No WA..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full sm:w-64 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">BIB Number</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Peserta</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No. WhatsApp</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">L/P</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Alamat</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Waktu Daftar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body" class="bg-white divide-y divide-gray-200">
+                            <!-- Data baris dirender lewat JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. VIEW: PRINT BIB -->
+    <div id="view-print-bib" class="view-section hidden bg-gray-200 min-h-screen py-8 print:py-0 print:bg-white relative">
+        <!-- Toolbar Print -->
+        <div class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-4 rounded-full shadow-2xl flex items-center space-x-6 z-50 no-print">
+            <span class="font-medium text-sm hidden md:inline">Mode Cetak A4 (2 BIB per halaman)</span>
+            <button onclick="window.print()" class="bg-green-500 hover:bg-green-400 text-gray-900 px-4 py-2 rounded-lg font-bold flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                <span class="ml-2">Cetak Sekarang</span>
+            </button>
+            <button onclick="switchView('view-admin-dashboard')" class="text-gray-300 hover:text-white text-sm font-medium underline">
+                Tutup & Kembali
+            </button>
+        </div>
+
+        <!-- Area Cetak yang akan di-inject script -->
+        <div id="print-area">
+            <!-- Halaman A4 Render dari JS -->
+        </div>
+    </div>
+
+    <!-- 6. VIEW: ADMIN SCANNER QR (BARU) -->
+    <div id="view-admin-scanner" class="view-section hidden min-h-screen bg-gray-900 py-10 px-4 flex items-center justify-center">
+        <div class="max-w-md w-full bg-white rounded-2xl shadow-2xl overflow-hidden relative">
+            <div class="bg-gray-800 py-4 px-6 flex justify-between items-center text-white">
+                <h3 class="font-bold text-lg">Verifikasi Tiket Peserta</h3>
+                <button onclick="closeScanner()" class="text-gray-300 hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <div class="p-6 text-center">
+                <!-- Area Kamera Reader -->
+                <div id="qr-reader" class="mx-auto w-full max-w-sm rounded-lg overflow-hidden border-4 border-gray-100"></div>
+                
+                <!-- Hasil Scan (Muncul ketika sukses/gagal scan) -->
+                <div id="qr-result" class="hidden animate-fade-in pt-4">
+                    <!-- Isinya di-inject dari Javascript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // =========================================================================
+        // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI BAWAH INI
+        // (Pastikan URL diakhiri dengan "/exec")
+        // =========================================================================
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyNiPni0w4Z-LhmOR6JtUNSbYgmBcEV6NBLWJTpL3d2lsMPFbCwaAvNVIotVPJXmwPH/exec'; 
+
+        // Data Utama Global
+        let registrations = [];
+        let currentReg = null;
+        let isChecking = true; // State penanda fase form cerdas
+        let html5QrcodeScanner = null; // Instansiasi QR Scanner
+
+        // Cek Keamanan URL (Mengingatkan jika URL masih /edit)
+        window.onload = function() {
+            if(SCRIPT_URL.includes('/edit')) {
+                alert("PENTING: SCRIPT_URL Anda salah! URL harus berakhiran '/exec', bukan '/edit'.");
+            }
+        };
+
+        // Fungsi Reset Form kembali ke keadaan awal (hanya WA)
+        function resetSmartForm() {
+            isChecking = true;
+            document.getElementById('form-smart').reset();
+            
+            const waInput = document.getElementById('reg-wa');
+            waInput.readOnly = false;
+            waInput.classList.remove('bg-gray-100', 'text-gray-500', 'cursor-not-allowed');
+            
+            document.getElementById('step-2-details').classList.add('hidden');
+            document.getElementById('btn-submit-smart').innerHTML = 'Lanjut';
+            
+            const helpText = document.getElementById('wa-help-text');
+            helpText.textContent = '*Masukkan No. WA untuk mendaftar baru atau melihat tiket Anda.';
+            helpText.classList.remove('text-green-600', 'font-medium');
+            
+            // Hapus status required sementara dari tahap 2
+            document.getElementById('reg-name').required = false;
+            document.getElementById('reg-address').required = false;
+        }
+
+        // Fungsi Pindah View Utama (DIPERBAIKI UNTUK CSS PRINT)
+        function switchView(viewId) {
+            // Sembunyikan semua view dan buang class 'active' agar tidak dicetak browser
+            document.querySelectorAll('.view-section').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('active');
+            });
+            
+            // Tampilkan view yang dituju dan tambahkan class 'active'
+            const targetView = document.getElementById(viewId);
+            targetView.classList.remove('hidden');
+            targetView.classList.add('active');
+            window.scrollTo(0, 0);
+
+            if (viewId === 'view-admin-dashboard') {
+                renderDashboard();
+            }
+            if (viewId === 'view-main') {
+                resetSmartForm();
+            }
+        }
+
+        // Tampilkan Notifikasi
+        function showNotification(message) {
+            const notifBar = document.getElementById('notification-bar');
+            notifBar.textContent = message;
+            notifBar.classList.remove('hidden');
+            setTimeout(() => {
+                notifBar.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Fungsi Bantuan Error Khusus Google Apps Script (Failed to Fetch)
+        function showGasError(errorContext, errorMessage) {
+            console.error(`Detail Error ${errorContext}:`, errorMessage);
+            let msg = `⛔ KONEKSI DIBLOKIR OLEH GOOGLE (Failed to fetch)\n\n`;
+            msg += `Silakan cek 4 hal ini:\n`;
+            msg += `1. Pastikan SCRIPT_URL berakhiran "/exec" (Bukan /edit).\n`;
+            msg += `2. Apakah Anda pakai email kampus/kantor? Wajib gunakan email @gmail.com biasa.\n`;
+            msg += `3. Apakah Anda sudah Deploy "Versi Baru"? (Hanya save/Ctrl+S tidak cukup).\n`;
+            msg += `4. Pada saat deploy, "Jalankan Sebagai" wajib diatur ke "SAYA (Me)".\n`;
+            alert(msg);
+        }
+
+        // Memuat QR Code & Data Tiket ke Layar
+        function showTicketData(data, title) {
+            document.getElementById('success-title').textContent = title;
+            
+            // Data dalam QR diformat khusus agar mudah dibaca oleh admin scanner
+            const qrData = encodeURIComponent(`BIB:${data.bibNumber}|Nama:${data.name}|WA:${data.wa}`);
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${qrData}`;
+            
+            document.getElementById('success-qr').src = qrUrl;
+            document.getElementById('success-bib').textContent = data.bibNumber;
+            document.getElementById('success-name').textContent = data.name;
+            document.getElementById('success-gender').textContent = data.gender;
+
+            switchView('view-success');
+        }
+
+        // Handler SMART FORM (Menyatukan Cek WA dan Pendaftaran)
+        document.getElementById('form-smart').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if (SCRIPT_URL === 'MASUKKAN_URL_WEB_APP_ANDA_DISINI' || SCRIPT_URL === '') { alert("PENTING: Anda belum memasukkan SCRIPT_URL!"); return; }
+
+            const wa = document.getElementById('reg-wa').value;
+            const btnSubmit = document.getElementById('btn-submit-smart');
+            const originalBtnText = btnSubmit.innerHTML;
+            
+            if (isChecking) {
+                // FASE 1: CEK NOMOR WA
+                btnSubmit.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Memeriksa...`;
+                btnSubmit.disabled = true;
+
+                try {
+                    const response = await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'cors',
+                        redirect: 'follow',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify({ action: 'check', wa: wa })
+                    });
+                    const result = await response.json();
+
+                    if (result.status === 'success') {
+                        // WA DITEMUKAN
+                        showTicketData(result.data, "Tiket Anda Ditemukan");
+                    } else if (result.status === 'not_found') {
+                        // WA BELUM ADA -> Buka sisa form
+                        isChecking = false;
+                        document.getElementById('step-2-details').classList.remove('hidden');
+                        
+                        const waInput = document.getElementById('reg-wa');
+                        waInput.readOnly = true;
+                        waInput.classList.add('bg-gray-100', 'text-gray-500', 'cursor-not-allowed');
+                        
+                        const helpText = document.getElementById('wa-help-text');
+                        helpText.textContent = '✔️ Nomor belum terdaftar. Silakan lengkapi data di bawah.';
+                        helpText.classList.add('text-green-600', 'font-medium');
+
+                        document.getElementById('reg-name').required = true;
+                        document.getElementById('reg-address').required = true;
+                        
+                        btnSubmit.innerHTML = 'Selesaikan Pendaftaran';
+                    } else {
+                        alert("Terjadi kesalahan dari server: " + result.message);
+                    }
+                } catch (error) {
+                    showGasError("FASE 1", error.message);
+                } finally {
+                    if (isChecking) { btnSubmit.innerHTML = originalBtnText; }
+                    btnSubmit.disabled = false;
+                }
+
+            } else {
+                // FASE 2: PROSES PENYIMPANAN PENDAFTARAN BARU
+                const name = document.getElementById('reg-name').value;
+                const address = document.getElementById('reg-address').value;
+                const genderRadio = document.querySelector('input[name="gender"]:checked');
+                
+                if (!genderRadio) { alert('Pilih Kategori Peserta (Jenis Kelamin) terlebih dahulu!'); return; }
+
+                btnSubmit.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Mendaftarkan...`;
+                btnSubmit.disabled = true;
+
+                try {
+                    const response = await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'cors',
+                        redirect: 'follow',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify({ action: 'register', name: name, wa: wa, address: address, gender: genderRadio.value })
+                    });
+                    const result = await response.json();
+
+                    if (result.status === 'success' || result.status === 'exists') {
+                        showTicketData(result.data, "Pendaftaran Berhasil!");
+                        showNotification(`✅ Tiket berhasil dibuat untuk: ${wa}`);
+                    } else {
+                        alert("Terjadi kesalahan dari server: " + result.message);
+                    }
+                } catch (error) {
+                    showGasError("FASE 2", error.message);
+                } finally {
+                    btnSubmit.innerHTML = originalBtnText;
+                    btnSubmit.disabled = false;
+                }
+            }
+        });
+
+        // Handler Admin Login
+        document.getElementById('form-admin-login').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('admin-password').value;
+            if (password === 'admin123') {
+                document.getElementById('admin-password').value = '';
+                switchView('view-admin-dashboard');
+            } else {
+                alert('Password salah!');
+            }
+        });
+
+        // Handler Pencarian di Dashboard
+        document.getElementById('search-input').addEventListener('input', function() {
+            renderTable(this.value);
+        });
+
+        // Render Dashboard (Ambil Data dari Google Sheets)
+        async function renderDashboard() {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-sm text-gray-500"><svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-500 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Memuat data dari Google Sheets...</td></tr>`;
+            
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    redirect: 'follow',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'get_all' })
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    registrations = result.data; // Simpan data ke memori lokal admin (Penting untuk pencarian & Scan QR)
+                    
+                    const total = registrations.length;
+                    const totalLaki = registrations.filter(r => r.gender === 'Laki-laki').length;
+                    const totalPerempuan = registrations.filter(r => r.gender === 'Perempuan').length;
+
+                    document.getElementById('stat-total').textContent = total;
+                    document.getElementById('stat-male').textContent = totalLaki;
+                    document.getElementById('stat-female').textContent = totalPerempuan;
+
+                    renderTable('');
+                } else {
+                    tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-sm text-red-500">Error: ${result.message}</td></tr>`;
+                }
+            } catch (error) {
+                console.error("Detail Error Admin:", error);
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-sm text-red-500">
+                    <strong>Gagal mengambil data! (Failed to fetch)</strong><br><br>
+                    1. Pastikan URL berakhiran /exec<br>
+                    2. Pastikan Jalankan Sebagai: SAYA (Me)<br>
+                    3. Lakukan Deploy "Versi Baru"
+                </td></tr>`;
+            }
+        }
+
+        function renderTable(searchQuery) {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = ''; 
+            
+            const query = searchQuery ? searchQuery.toLowerCase() : '';
+            const filteredData = registrations.filter(r => 
+                r.name.toLowerCase().includes(query) || 
+                r.wa.includes(query) ||
+                r.bibNumber.toLowerCase().includes(query)
+            );
+
+            if (filteredData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-sm text-gray-500">Belum ada data pendaftar yang cocok.</td></tr>`;
+                return;
+            }
+
+            filteredData.forEach(reg => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-gray-50 transition-colors';
+                
+                const genderSpan = reg.gender === 'Laki-laki' 
+                    ? `<span class="text-indigo-600 font-bold">L</span>` 
+                    : `<span class="text-pink-600 font-bold">P</span>`;
+
+                tr.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-blue-600">${reg.bibNumber || '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${reg.name || '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${reg.wa || '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">${genderSpan}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500 truncate max-w-xs" title="${reg.address || ''}">${reg.address || '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${reg.timestamp || '-'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // ==========================================
+        // FITUR BARU: QR CODE SCANNER (ADMIN)
+        // ==========================================
+        
+        // Memulai Kamera Scanner
+        function startScanner() {
+            // Jika data belum diambil, tolak
+            if (registrations.length === 0) {
+                alert("Mohon tunggu sampai data tabel selesai dimuat, atau tekan refresh.");
+                return;
+            }
+            
+            switchView('view-admin-scanner');
+            document.getElementById('qr-reader').classList.remove('hidden');
+            document.getElementById('qr-result').classList.add('hidden');
+            
+            if (!html5QrcodeScanner) {
+                // Inisialisasi scanner
+                html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { 
+                    fps: 10, 
+                    qrbox: {width: 250, height: 250},
+                    supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
+                }, false);
+            }
+            
+            // Render kamera
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        }
+
+        // Fungsi saat QR Code berhasil terdeteksi
+        function onScanSuccess(decodedText, decodedResult) {
+            // Hentikan kamera sementara agar tidak terscan ganda
+            if (html5QrcodeScanner) html5QrcodeScanner.clear();
+
+            document.getElementById('qr-reader').classList.add('hidden');
+            const resultDiv = document.getElementById('qr-result');
+            resultDiv.classList.remove('hidden');
+            
+            // Format QR yang dihasilkan sistem kita: BIB:FR-0001|Nama:Budi|WA:0812...
+            let scannedBib = "";
+            let scannedWa = "";
+            
+            try {
+                // Ekstrak informasi dari teks QR
+                const parts = decodedText.split('|');
+                parts.forEach(part => {
+                    if (part.startsWith("BIB:")) scannedBib = part.replace("BIB:", "");
+                    if (part.startsWith("WA:")) scannedWa = part.replace("WA:", "");
+                });
+            } catch(e) {}
+
+            // Bersihkan format WA untuk pencocokan (mengabaikan awalan 0/62)
+            function cleanStr(str) { return str ? str.replace(/^(\+62|62|0)/, '').replace(/\D/g, '') : ''; }
+            const matchWa = cleanStr(scannedWa);
+
+            // Cari di array lokal (registrations) yang sudah ditarik saat admin masuk dashboard
+            const validParticipant = registrations.find(r => 
+                (r.bibNumber === scannedBib) || 
+                (cleanStr(r.wa) === matchWa && matchWa !== '')
+            );
+
+            if (validParticipant) {
+                // Tampilan Sukses / Valid
+                resultDiv.innerHTML = `
+                    <div class="text-green-500 mb-2">
+                        <svg class="w-20 h-20 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-3xl font-extrabold text-green-600 uppercase tracking-widest">Data Valid</h3>
+                    <p class="text-gray-500 text-sm mt-1">Peserta resmi terdaftar.</p>
+                    
+                    <div class="mt-6 bg-gray-50 border border-gray-200 p-5 rounded-xl text-left shadow-inner">
+                        <div class="flex justify-between border-b pb-2 mb-2">
+                            <span class="text-gray-500 text-sm">BIB Number</span>
+                            <span class="font-bold text-blue-600">${validParticipant.bibNumber}</span>
+                        </div>
+                        <div class="flex justify-between border-b pb-2 mb-2">
+                            <span class="text-gray-500 text-sm">Nama Lengkap</span>
+                            <span class="font-bold text-gray-800">${validParticipant.name}</span>
+                        </div>
+                        <div class="flex justify-between border-b pb-2 mb-2">
+                            <span class="text-gray-500 text-sm">No WhatsApp</span>
+                            <span class="font-semibold text-gray-700">${validParticipant.wa}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500 text-sm">Kategori</span>
+                            <span class="font-bold uppercase ${validParticipant.gender === 'Laki-laki' ? 'text-indigo-600' : 'text-pink-600'}">${validParticipant.gender}</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="restartScanner()" class="mt-8 w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold shadow-md transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 7h10v10H7z"></path></svg>
+                        Scan Peserta Berikutnya
+                    </button>
+                `;
+            } else {
+                // Tampilan Gagal / Tidak Ditemukan
+                resultDiv.innerHTML = `
+                    <div class="text-red-500 mb-2">
+                        <svg class="w-20 h-20 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-3xl font-extrabold text-red-600 uppercase tracking-widest">Tidak Valid</h3>
+                    <p class="text-gray-500 mt-2">Data tiket ini tidak ditemukan di dalam database pendaftaran Fun Run.</p>
+                    
+                    <div class="mt-4 bg-red-50 text-red-700 p-3 rounded-lg text-xs text-left border border-red-200">
+                        <p class="font-bold mb-1">Data Terbaca (Mentah):</p>
+                        <p class="break-all font-mono">${decodedText}</p>
+                    </div>
+
+                    <button onclick="restartScanner()" class="mt-8 w-full bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 rounded-xl font-bold transition-all">
+                        Coba Scan Lagi
+                    </button>
+                `;
+            }
+        }
+
+        // Abaikan jika scanner gagal membaca qr dalam 1 frame (wajar terjadi terus menerus)
+        function onScanFailure(error) { 
+            // Jangan lakukan console.log agar browser tidak berat
+        }
+
+        function restartScanner() {
+            startScanner();
+        }
+        
+        function closeScanner() {
+            if(html5QrcodeScanner) {
+                html5QrcodeScanner.clear().catch(error => {
+                    console.error("Gagal menutup kamera", error);
+                });
+            }
+            switchView('view-admin-dashboard');
+        }
+
+        // Render Halaman Cetak BIB (Bawaan Admin)
+        function renderAndSwitchToPrint() {
+            const printArea = document.getElementById('print-area');
+            printArea.innerHTML = '';
+
+            if (registrations.length === 0) {
+                printArea.innerHTML = `<div class="text-center py-20 text-gray-500 a4-page flex items-center justify-center">Belum ada data pendaftar untuk dicetak.</div>`;
+            } else {
+                for (let i = 0; i < registrations.length; i += 2) {
+                    const chunk = registrations.slice(i, i + 2);
+                    let htmlChunk = `<div class="a4-page page-break bg-white shadow-xl print:shadow-none mb-8 print:mb-0 flex flex-col">`;
+                    
+                    chunk.forEach((reg, index) => {
+                        const borderClass = index === 0 ? 'border-b-2 border-dashed border-gray-400' : '';
+                        const bibNumberOnly = reg.bibNumber ? reg.bibNumber.replace('FR-', '') : '0000';
+                        const displayName = reg.name || 'NN';
+                        const displayGender = reg.gender || '-';
+                        
+                        htmlChunk += `
+                        <div class="bib-card flex flex-col items-center justify-center p-8 relative overflow-hidden ${borderClass}">
+                            <div class="absolute top-0 left-0 w-full h-4 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
+                            <div class="absolute bottom-0 left-0 w-full h-4 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
+                            
+                            <h1 class="text-3xl font-extrabold tracking-widest text-gray-800 uppercase mb-6">FUN RUN 2026</h1>
+                            
+                            <div class="text-[120px] font-black leading-none text-blue-600 mb-6 tracking-tighter">
+                                ${bibNumberOnly}
+                            </div>
+                            
+                            <div class="bg-gray-100 px-10 py-3 rounded-full border border-gray-200">
+                                <h2 class="text-3xl font-bold text-gray-800 uppercase truncate max-w-lg text-center">
+                                    ${displayName}
+                                </h2>
+                            </div>
+                            <p class="mt-4 text-gray-500 font-medium text-lg uppercase tracking-widest">
+                                Kategori: ${displayGender}
+                            </p>
+                            <div class="absolute top-8 right-8 text-sm font-bold text-gray-300 transform rotate-12">OFFICIAL BIB</div>
+                        </div>`;
+                    });
+
+                    if (chunk.length === 1) htmlChunk += `<div class="bib-card flex items-center justify-center text-gray-300">Halaman Kosong</div>`;
+                    htmlChunk += `</div>`;
+                    printArea.innerHTML += htmlChunk;
+                }
+            }
+
+            switchView('view-print-bib');
+        }
+    </script>
+</body>
+</html>
