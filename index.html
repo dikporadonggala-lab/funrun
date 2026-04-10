@@ -25,11 +25,36 @@
         .a4-page { width: 210mm; min-height: 297mm; background: white; margin: 0 auto; padding: 0; box-sizing: border-box; }
         .bib-card { height: 148.5mm; width: 100%; box-sizing: border-box; }
         
+        /* Grid Khusus Kupon Undian (50 per Halaman) */
+        .kupon-page {
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            margin: 0 auto;
+            padding: 5mm; /* Jarak aman tepi kertas */
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(10, 1fr);
+            gap: 0;
+        }
+        .kupon-card {
+            border: 1px dashed #9ca3af; /* Garis potong abu-abu */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2mm;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
         /* Animasi Notifikasi */
         @keyframes pulse-bg { 0%, 100% { background-color: #22c55e; } 50% { background-color: #16a34a; } }
         .animate-pulse-bg { animation: pulse-bg 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         
-        /* Animasi Melayang (Float) Bosku */
+        /* Animasi Melayang (Float) */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-8px); }
@@ -37,16 +62,6 @@
         .animate-float { animation: float 3.5s ease-in-out infinite; }
         .delay-100 { animation-delay: 100ms; }
         .delay-200 { animation-delay: 200ms; }
-        
-        /* Animasi Blob Background Login */
-        @keyframes blob {
-            0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-            100% { transform: translate(0px, 0px) scale(1); }
-        }
-        .animate-blob { animation: blob 7s infinite; }
-        .animation-delay-2000 { animation-delay: 2s; }
 
         .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
     </style>
@@ -66,10 +81,10 @@
             
             <!-- Header Transparan -->
             <div class="border-b border-white/30 py-8 px-4 text-center">
-                <!-- Teks disesuaikan: Font size bawah diperbesar & ditambahkan letter spacing agar lebarnya proporsional -->
+                <!-- Teks disesuaikan: Warna DISDIKPORA diganti Biru Donker (blue-900) -->
                 <h2 class="font-black text-white leading-tight whitespace-nowrap drop-shadow-md">
                     <span class="text-[1.2rem] sm:text-2xl tracking-tight">HARDIKNAS FUN RUN 2026</span><br>
-                    <span class="text-yellow-300 text-[1.15rem] sm:text-[1.4rem] tracking-[0.03em] sm:tracking-[0.05em]">DISDIKPORA DONGGALA</span>
+                    <span class="text-blue-900 text-[1.15rem] sm:text-[1.4rem] tracking-[0.03em] sm:tracking-[0.05em] drop-shadow-md">DISDIKPORA DONGGALA</span>
                 </h2>
                 <p class="text-gray-100 mt-2 text-xs sm:text-sm drop-shadow-md font-medium">Sistem Pendaftaran & Tiket</p>
             </div>
@@ -79,7 +94,7 @@
                 <!-- STEP 1: Nomor WA -->
                 <div>
                     <label class="block text-sm font-bold text-black drop-shadow-sm">Nomor WhatsApp</label>
-                    <input type="tel" id="reg-wa" required class="mt-1 block w-full bg-white/50 border border-white/50 text-gray-900 placeholder-gray-600 rounded-xl shadow-inner py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/70 text-lg font-bold tracking-wide transition-colors" placeholder="081234567890">
+                    <input type="tel" id="reg-wa" required class="mt-1 block w-full bg-white/50 border border-white/50 text-gray-900 placeholder-gray-400 rounded-xl shadow-inner py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/70 text-lg font-bold tracking-wide transition-colors" placeholder="081234567890">
                     <p id="wa-help-text" class="text-xs text-black mt-2 drop-shadow-sm font-medium">*Masukkan No. WA untuk mendaftar baru atau melihat tiket Anda.</p>
                 </div>
 
@@ -87,7 +102,7 @@
                 <div id="step-2-details" class="hidden space-y-6 pt-6 border-t border-white/30 animate-fade-in">
                     <div>
                         <label class="block text-sm font-bold text-black drop-shadow-sm">Nama Lengkap</label>
-                        <input type="text" id="reg-name" class="mt-1 block w-full bg-white/50 border border-white/50 text-gray-900 placeholder-gray-600 rounded-xl shadow-inner py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/70 transition-colors font-semibold" placeholder="Contoh: Budi Santoso">
+                        <input type="text" id="reg-name" class="mt-1 block w-full bg-white/50 border border-white/50 text-gray-900 placeholder-gray-400 rounded-xl shadow-inner py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/70 transition-colors font-semibold" placeholder="Contoh: Budi Santoso">
                     </div>
 
                     <div>
@@ -116,7 +131,7 @@
 
                     <div>
                         <label class="block text-sm font-bold text-black drop-shadow-sm">Alamat Lengkap</label>
-                        <textarea id="reg-address" rows="3" class="mt-1 block w-full bg-white/50 border border-white/50 text-gray-900 placeholder-gray-600 rounded-xl shadow-inner py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/70 transition-colors font-semibold" placeholder="Ketik alamat domisili..."></textarea>
+                        <textarea id="reg-address" rows="3" class="mt-1 block w-full bg-white/50 border border-white/50 text-gray-900 placeholder-gray-400 rounded-xl shadow-inner py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/70 transition-colors font-semibold" placeholder="Ketik alamat domisili..."></textarea>
                     </div>
                 </div>
 
@@ -166,14 +181,12 @@
         </div>
     </div>
 
-    <!-- 3. VIEW: ADMIN LOGIN (Glassmorphism / Efek Kaca Transparan) -->
+    <!-- 3. VIEW: ADMIN LOGIN -->
     <div id="view-admin-login" class="view-section hidden min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden bg-cover bg-center bg-no-repeat bg-fixed" 
          style="background-image: url('https://i.ibb.co.com/HwZ6zGn/8049b0d221d15b10b191b6e76d115fa3.jpg');">
         
-        <!-- Overlay gelap (Diterangkan sedikit) -->
         <div class="absolute inset-0 bg-gray-900/30 backdrop-blur-md"></div>
 
-        <!-- Card Login Transparan (Lebih transparan) -->
         <div class="max-w-sm w-full bg-white/10 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] p-8 relative z-10 border border-white/20 mt-6">
             <div class="flex justify-center mb-4">
                 <div class="w-16 h-16 bg-white/30 backdrop-blur-sm border border-white/40 rounded-full flex items-center justify-center text-white shadow-lg">
@@ -214,29 +227,34 @@
                         <h1 class="text-lg sm:text-xl font-extrabold text-gray-800">Dashboard Panitia <span id="badge-role" class="ml-2 text-[10px] bg-green-100 text-green-700 px-2 py-1 rounded-full uppercase tracking-widest align-middle">ADMIN</span></h1>
                     </div>
                     
-                    <div class="hidden sm:flex items-center space-x-3">
+                    <div class="hidden sm:flex items-center space-x-2 lg:space-x-3">
                         <button onclick="renderDashboard()" class="text-sm font-bold text-gray-500 hover:text-blue-600 flex items-center px-2 py-2 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
                         </button>
                         
-                        <!-- Tombol Tambah Admin (HANYA SUPERADMIN) -->
-                        <button onclick="openManageAdmin()" class="superadmin-only hidden inline-flex items-center px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-white bg-purple-600 hover:bg-purple-700 transition-transform active:scale-95">
+                        <button onclick="openManageAdmin()" class="superadmin-only hidden inline-flex items-center px-3 lg:px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-white bg-purple-600 hover:bg-purple-700 transition-transform active:scale-95">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                            <span class="ml-2">Kelola Admin</span>
+                            <span class="ml-2 hidden lg:inline">Kelola Admin</span>
                         </button>
 
-                        <button onclick="startScanner()" class="inline-flex items-center px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-transform active:scale-95">
+                        <button onclick="startScanner()" class="inline-flex items-center px-3 lg:px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-transform active:scale-95">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><rect x="7" y="7" width="10" height="10" rx="1"></rect></svg>
-                            <span class="ml-2">Scan QR</span>
+                            <span class="ml-2 hidden lg:inline">Scan QR</span>
                         </button>
 
-                        <!-- Tombol Cetak BIB (HANYA SUPERADMIN) -->
-                        <button onclick="renderAndSwitchToPrint()" class="superadmin-only hidden inline-flex items-center px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 transition-transform active:scale-95">
+                        <!-- Tombol Cetak BIB -->
+                        <button onclick="renderAndSwitchToPrint()" class="superadmin-only hidden inline-flex items-center px-3 lg:px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 transition-transform active:scale-95">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                            <span class="ml-2">Cetak Semua BIB</span>
+                            <span class="ml-2 hidden lg:inline">Cetak BIB</span>
+                        </button>
+
+                        <!-- Tombol Cetak Kupon (BARU) -->
+                        <button onclick="renderAndSwitchToPrintKupon()" class="superadmin-only hidden inline-flex items-center px-3 lg:px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-white bg-yellow-500 hover:bg-yellow-600 transition-transform active:scale-95">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5.5v2"></path><path d="M15 11.5v2"></path><path d="M15 17.5v2"></path><path d="M5 5h14a2 2 0 0 1 2 2v2.5a2.5 2.5 0 0 0 0 5V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2.5a2.5 2.5 0 0 0 0-5V7a2 2 0 0 1 2-2z"></path></svg>
+                            <span class="ml-2 hidden lg:inline">Cetak Kupon</span>
                         </button>
                         
-                        <button onclick="logoutAdmin()" class="text-sm font-bold text-red-600 bg-red-50 hover:bg-red-100 rounded-xl ml-4 px-4 py-2 transition-colors">
+                        <button onclick="logoutAdmin()" class="text-sm font-bold text-red-600 bg-red-50 hover:bg-red-100 rounded-xl ml-2 px-4 py-2 transition-colors">
                             Logout
                         </button>
                     </div>
@@ -326,7 +344,13 @@
             <!-- HANYA SUPERADMIN -->
             <button onclick="renderAndSwitchToPrint()" class="superadmin-only hidden flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-green-600 active:bg-green-50 transition-colors rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                <span class="text-[9px] font-bold tracking-wider">Cetak</span>
+                <span class="text-[9px] font-bold tracking-wider">BIB</span>
+            </button>
+
+            <!-- HANYA SUPERADMIN KUPON -->
+            <button onclick="renderAndSwitchToPrintKupon()" class="superadmin-only hidden flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-yellow-500 active:bg-yellow-50 transition-colors rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M15 5.5v2"></path><path d="M15 11.5v2"></path><path d="M15 17.5v2"></path><path d="M5 5h14a2 2 0 0 1 2 2v2.5a2.5 2.5 0 0 0 0 5V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2.5a2.5 2.5 0 0 0 0-5V7a2 2 0 0 1 2-2z"></path></svg>
+                <span class="text-[9px] font-bold tracking-wider">Kupon</span>
             </button>
             
             <button onclick="logoutAdmin()" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-red-500 active:bg-red-50 transition-colors rounded-lg">
@@ -404,6 +428,22 @@
         </div>
 
         <div id="print-area"></div>
+    </div>
+
+    <!-- 8. VIEW: PRINT KUPON UNDIAN (BARU) -->
+    <div id="view-print-kupon" class="view-section hidden bg-gray-200 min-h-screen py-8 print:py-0 print:bg-white relative">
+        <div class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-4 rounded-full shadow-2xl flex items-center space-x-6 z-50 no-print">
+            <span class="font-medium text-sm hidden md:inline">Mode Cetak Kupon A4 (50 per halaman)</span>
+            <button onclick="window.print()" class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 px-5 py-2 rounded-lg font-bold flex items-center transition-transform active:scale-95">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                <span class="ml-2">Cetak Kupon</span>
+            </button>
+            <button onclick="switchView('view-admin-dashboard')" class="text-gray-300 hover:text-white text-sm font-bold underline">
+                Tutup & Kembali
+            </button>
+        </div>
+
+        <div id="print-kupon-area"></div>
     </div>
 
     <!-- 7. VIEW: ADMIN SCANNER QR -->
@@ -881,6 +921,46 @@
                 }
             }
             switchView('view-print-bib');
+        }
+
+        // ==========================================
+        // RENDER PRINT KUPON (50 per A4)
+        // ==========================================
+        function renderAndSwitchToPrintKupon() {
+            if(currentAdminRole !== 'superadmin') { alert("Hanya untuk Superadmin."); return; }
+            const printKuponArea = document.getElementById('print-kupon-area');
+            printKuponArea.innerHTML = '';
+            
+            if (registrations.length === 0) {
+                printKuponArea.innerHTML = `<div class="text-center py-20 text-gray-500 a4-page flex items-center justify-center">Belum ada data pendaftar untuk dicetak.</div>`;
+            } else {
+                // Proses per 50 data untuk 1 halaman A4
+                for (let i = 0; i < registrations.length; i += 50) {
+                    const chunk = registrations.slice(i, i + 50);
+                    let htmlChunk = `<div class="kupon-page page-break bg-white shadow-xl print:shadow-none mb-8 print:mb-0">`;
+                    
+                    chunk.forEach((reg) => {
+                        const bibNumberOnly = reg.bibNumber ? reg.bibNumber.replace('FR-', '') : '0000';
+                        const displayName = reg.name || 'NN';
+                        
+                        htmlChunk += `
+                        <div class="kupon-card">
+                            <div class="text-[7px] font-bold text-gray-500 uppercase tracking-widest mb-1 leading-tight">KUPON UNDIAN</div>
+                            <div class="text-2xl font-black text-blue-700 leading-none mb-1 tracking-tighter">${bibNumberOnly}</div>
+                            <div class="text-[8px] font-bold text-gray-800 truncate w-full px-1 leading-tight">${displayName}</div>
+                        </div>`;
+                    });
+                    
+                    // Mengisi slot grid yang kosong jika data tidak genap kelipatan 50
+                    for(let j = chunk.length; j < 50; j++) {
+                        htmlChunk += `<div class="kupon-card bg-gray-50 flex items-center justify-center"><span class="text-[8px] text-gray-300">KOSONG</span></div>`;
+                    }
+                    
+                    htmlChunk += `</div>`;
+                    printKuponArea.innerHTML += htmlChunk;
+                }
+            }
+            switchView('view-print-kupon');
         }
     </script>
 </body>
