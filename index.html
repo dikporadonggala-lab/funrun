@@ -85,7 +85,6 @@
                             <label class="flex-1 cursor-pointer">
                                 <input type="radio" name="gender" value="Laki-laki" class="peer sr-only">
                                 <div class="flex flex-col items-center justify-center py-5 border-2 border-gray-200 rounded-2xl peer-checked:border-blue-500 peer-checked:bg-blue-50 text-gray-600 peer-checked:text-blue-700 transition-all hover:bg-gray-50 shadow-sm">
-                                    <!-- Efek Melayang di Ikon Laki-laki -->
                                     <div class="w-16 h-16 mb-3 rounded-full bg-blue-100 flex items-center justify-center shadow-inner border border-blue-200 animate-float">
                                         <svg class="w-9 h-9 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
                                     </div>
@@ -95,7 +94,6 @@
                             <label class="flex-1 cursor-pointer">
                                 <input type="radio" name="gender" value="Perempuan" class="peer sr-only">
                                 <div class="flex flex-col items-center justify-center py-5 border-2 border-gray-200 rounded-2xl peer-checked:border-pink-500 peer-checked:bg-pink-50 text-gray-600 peer-checked:text-pink-700 transition-all hover:bg-gray-50 shadow-sm">
-                                    <!-- Efek Melayang di Ikon Perempuan -->
                                     <div class="w-16 h-16 mb-3 rounded-full bg-pink-100 flex items-center justify-center shadow-inner border border-pink-200 animate-float delay-100">
                                         <svg class="w-9 h-9 text-pink-500" fill="currentColor" viewBox="0 0 24 24" style="transform: scaleX(-1);"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
                                     </div>
@@ -157,36 +155,39 @@
         </div>
     </div>
 
-    <!-- 3. VIEW: ADMIN LOGIN (SUDAH MULTI-ROLE) -->
-    <div id="view-admin-login" class="view-section hidden min-h-screen bg-gray-900 flex items-center justify-center px-4 relative overflow-hidden">
-        <!-- Dekorasi Background Berkilau -->
-        <div class="absolute top-[-100px] left-[-100px] w-64 h-64 bg-blue-600 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob"></div>
-        <div class="absolute bottom-[-100px] right-[-100px] w-64 h-64 bg-purple-600 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+    <!-- 3. VIEW: ADMIN LOGIN (Background Sponsor) -->
+    <!-- GANTI LINK DI BAWAH INI DENGAN LINK GAMBAR SPONSOR HYDRO COCO YANG ASLI -->
+    <div id="view-admin-login" class="view-section hidden min-h-screen flex items-center justify-center px-4 relative overflow-hidden bg-cover bg-center bg-no-repeat" 
+         style="background-image: url('https://images.unsplash.com/photo-1526506466336-d716279fccdb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+        
+        <!-- Overlay gelap agar tulisan tetap terbaca -->
+        <div class="absolute inset-0 bg-gray-900/75 backdrop-blur-[2px]"></div>
 
-        <div class="max-w-sm w-full bg-white rounded-3xl shadow-2xl p-8 relative z-10">
+        <div class="max-w-sm w-full bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 relative z-10 border border-white/20">
             <div class="flex justify-center mb-4">
-                <div class="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center text-white shadow-lg">
+                <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"></path></svg>
                 </div>
             </div>
-            <h2 class="text-2xl font-extrabold text-center text-gray-800 mb-6">Portal Panitia</h2>
+            <h2 class="text-2xl font-extrabold text-center text-gray-800 mb-1">Portal Panitia</h2>
+            <p class="text-xs text-center text-gray-500 mb-6 uppercase tracking-wider font-bold">Hardiknas Fun Run</p>
             
             <form id="form-admin-login">
                 <div class="mb-4">
                     <label class="block text-sm font-bold text-gray-700 mb-1">Username</label>
-                    <input type="text" id="admin-username" class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors" placeholder="Masukkan username..." required>
+                    <input type="text" id="admin-username" class="w-full bg-white border border-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" placeholder="superadmin / admin" required>
                 </div>
                 <div class="mb-6">
                     <label class="block text-sm font-bold text-gray-700 mb-1">Password</label>
-                    <input type="password" id="admin-password" class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors" placeholder="••••••••" required>
+                    <input type="password" id="admin-password" class="w-full bg-white border border-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" placeholder="••••••••" required>
                 </div>
-                <button type="submit" id="btn-admin-login" class="w-full bg-gray-900 text-white rounded-xl py-3 font-bold hover:bg-gray-800 shadow-md transition-transform active:scale-95 flex justify-center items-center">
+                <button type="submit" id="btn-admin-login" class="w-full bg-blue-600 text-white rounded-xl py-3 font-bold hover:bg-blue-700 shadow-lg transition-transform active:scale-95 flex justify-center items-center">
                     Masuk Sistem
                 </button>
             </form>
 
             <div class="mt-6 text-center">
-                <button onclick="switchView('view-main')" class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors">← Batal & Kembali</button>
+                <button onclick="switchView('view-main')" class="text-sm font-bold text-gray-400 hover:text-gray-800 transition-colors">← Batal & Kembali</button>
             </div>
         </div>
     </div>
@@ -198,25 +199,28 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
                     <div class="flex items-center">
-                        <div class="w-8 h-8 rounded-lg bg-gray-900 flex items-center justify-center mr-3 hidden sm:flex shadow-sm text-white font-bold text-xs">
-                            FR
-                        </div>
-                        <h1 class="text-lg sm:text-xl font-extrabold text-gray-800">Panitia Dashboard <span id="badge-role" class="ml-2 text-[10px] bg-green-100 text-green-700 px-2 py-1 rounded-full uppercase tracking-widest align-middle">ADMIN</span></h1>
+                        <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center mr-3 hidden sm:flex shadow-sm text-white font-bold text-xs">FR</div>
+                        <h1 class="text-lg sm:text-xl font-extrabold text-gray-800">Dashboard Panitia <span id="badge-role" class="ml-2 text-[10px] bg-green-100 text-green-700 px-2 py-1 rounded-full uppercase tracking-widest align-middle">ADMIN</span></h1>
                     </div>
                     
                     <div class="hidden sm:flex items-center space-x-3">
-                        <button onclick="renderDashboard()" class="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center px-3 py-2 transition-colors">
+                        <button onclick="renderDashboard()" class="text-sm font-bold text-gray-500 hover:text-blue-600 flex items-center px-2 py-2 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-                            Refresh Data
                         </button>
                         
+                        <!-- Tombol Tambah Admin (HANYA SUPERADMIN) -->
+                        <button onclick="openManageAdmin()" class="superadmin-only hidden inline-flex items-center px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-white bg-purple-600 hover:bg-purple-700 transition-transform active:scale-95">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                            <span class="ml-2">Kelola Admin</span>
+                        </button>
+
                         <button onclick="startScanner()" class="inline-flex items-center px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-transform active:scale-95">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><rect x="7" y="7" width="10" height="10" rx="1"></rect></svg>
                             <span class="ml-2">Scan QR</span>
                         </button>
 
-                        <!-- Tombol Cetak disembunyikan untuk Admin biasa -->
-                        <button onclick="renderAndSwitchToPrint()" class="btn-print-bib hidden items-center px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 transition-transform active:scale-95">
+                        <!-- Tombol Cetak BIB (HANYA SUPERADMIN) -->
+                        <button onclick="renderAndSwitchToPrint()" class="superadmin-only hidden inline-flex items-center px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 transition-transform active:scale-95">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                             <span class="ml-2">Cetak Semua BIB</span>
                         </button>
@@ -295,27 +299,89 @@
         </div>
 
         <!-- BOTTOM NAV MOBILE -->
-        <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 sm:hidden flex justify-between px-2 pb-safe shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
+        <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 sm:hidden flex justify-between px-1 pb-safe shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
             
             <button onclick="startScanner()" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-blue-600 active:bg-blue-50 transition-colors rounded-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><rect x="7" y="7" width="10" height="10" rx="1"></rect></svg>
-                <span class="text-[10px] font-bold tracking-wider">Scan QR</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><rect x="7" y="7" width="10" height="10" rx="1"></rect></svg>
+                <span class="text-[9px] font-bold tracking-wider">Scan QR</span>
             </button>
 
-            <!-- Disembunyikan secara default, dimunculkan oleh JS jika superadmin -->
-            <button onclick="renderAndSwitchToPrint()" class="btn-print-bib hidden flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-green-600 active:bg-green-50 transition-colors rounded-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                <span class="text-[10px] font-bold tracking-wider">Cetak BIB</span>
+            <!-- HANYA SUPERADMIN -->
+            <button onclick="openManageAdmin()" class="superadmin-only hidden flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-purple-600 active:bg-purple-50 transition-colors rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                <span class="text-[9px] font-bold tracking-wider">Admin</span>
+            </button>
+
+            <!-- HANYA SUPERADMIN -->
+            <button onclick="renderAndSwitchToPrint()" class="superadmin-only hidden flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-green-600 active:bg-green-50 transition-colors rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                <span class="text-[9px] font-bold tracking-wider">Cetak</span>
             </button>
             
             <button onclick="logoutAdmin()" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-red-500 active:bg-red-50 transition-colors rounded-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                <span class="text-[10px] font-bold tracking-wider">Keluar</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <span class="text-[9px] font-bold tracking-wider">Keluar</span>
             </button>
         </div>
     </div>
 
-    <!-- 5. VIEW: PRINT BIB -->
+    <!-- 5. VIEW: KELOLA ADMIN (KHUSUS SUPERADMIN) -->
+    <div id="view-manage-admin" class="view-section hidden min-h-screen bg-gray-100 py-10 px-4">
+        <div class="max-w-3xl mx-auto">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-extrabold text-gray-800">Kelola Admin Panitia</h2>
+                <button onclick="switchView('view-admin-dashboard')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-xl font-bold transition-colors text-sm">
+                    ← Kembali
+                </button>
+            </div>
+
+            <!-- Form Tambah Admin Baru -->
+            <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 mb-6">
+                <h3 class="text-md font-bold text-purple-700 mb-4 uppercase tracking-widest border-b pb-2">Tambah Admin Baru</h3>
+                <form id="form-add-admin" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 mb-1">Username</label>
+                            <input type="text" id="new-admin-username" required class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:ring-2 focus:ring-purple-500 outline-none text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 mb-1">Password</label>
+                            <input type="text" id="new-admin-password" required class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:ring-2 focus:ring-purple-500 outline-none text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 mb-1">Hak Akses (Role)</label>
+                            <select id="new-admin-role" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:ring-2 focus:ring-purple-500 outline-none text-sm bg-white">
+                                <option value="admin">Admin Biasa (Scan QR)</option>
+                                <option value="superadmin">Superadmin (Scan, Cetak, Tambah Admin)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="submit" id="btn-submit-admin" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg shadow-sm transition-transform active:scale-95 text-sm">
+                            + Simpan Admin
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tabel Daftar Admin -->
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-purple-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-purple-700 uppercase tracking-widest">Username</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-purple-700 uppercase tracking-widest">Role (Akses)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-admin-body" class="bg-white divide-y divide-gray-100">
+                        <tr><td colspan="2" class="px-6 py-8 text-center text-sm text-gray-500">Memuat data admin...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. VIEW: PRINT BIB -->
     <div id="view-print-bib" class="view-section hidden bg-gray-200 min-h-screen py-8 print:py-0 print:bg-white relative">
         <div class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-4 rounded-full shadow-2xl flex items-center space-x-6 z-50 no-print">
             <span class="font-medium text-sm hidden md:inline">Mode Cetak A4 (2 BIB per halaman)</span>
@@ -331,7 +397,7 @@
         <div id="print-area"></div>
     </div>
 
-    <!-- 6. VIEW: ADMIN SCANNER QR -->
+    <!-- 7. VIEW: ADMIN SCANNER QR -->
     <div id="view-admin-scanner" class="view-section hidden min-h-screen bg-gray-900 sm:py-10 sm:px-4 flex items-center justify-center">
         <div class="w-full sm:max-w-md h-screen sm:h-auto bg-white sm:rounded-3xl shadow-2xl flex flex-col relative overflow-hidden">
             <div class="bg-gray-800 py-5 px-6 flex justify-between items-center text-white sm:rounded-t-3xl">
@@ -359,12 +425,12 @@
         // =========================================================================
         // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI BAWAH INI
         // =========================================================================
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzy244y0BZ2FK79nwNzEuKfClNlCBaoGvdm-fP9wYzKNqI1rS6EBJmChuMyjQ3MWbp_/exec'; 
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw8t7aND1jyHHeftFTrrwYL2CiI9-UgAWvoToZ044CgkKUajZVbZGh89v9FSr78WbQS/exec'; 
 
         let registrations = [];
         let isChecking = true; 
         let html5QrcodeScanner = null; 
-        let currentAdminRole = ''; // Menyimpan role login admin/superadmin
+        let currentAdminRole = ''; 
 
         window.onload = function() {
             if(SCRIPT_URL.includes('/edit')) {
@@ -375,18 +441,14 @@
         function resetSmartForm() {
             isChecking = true;
             document.getElementById('form-smart').reset();
-            
             const waInput = document.getElementById('reg-wa');
             waInput.readOnly = false;
             waInput.classList.remove('bg-gray-100', 'text-gray-500', 'cursor-not-allowed');
-            
             document.getElementById('step-2-details').classList.add('hidden');
             document.getElementById('btn-submit-smart').innerHTML = 'Lanjut';
-            
             const helpText = document.getElementById('wa-help-text');
             helpText.textContent = '*Masukkan No. WA untuk mendaftar baru atau melihat tiket Anda.';
             helpText.classList.remove('text-green-600', 'font-medium');
-            
             document.getElementById('reg-name').required = false;
             document.getElementById('reg-address').required = false;
         }
@@ -427,17 +489,6 @@
             setTimeout(() => { notifBar.classList.add('hidden'); }, 5000);
         }
 
-        function showGasError(errorContext, errorMessage) {
-            console.error(`Detail Error ${errorContext}:`, errorMessage);
-            let msg = `⛔ KONEKSI DIBLOKIR OLEH GOOGLE (Failed to fetch)\n\n`;
-            msg += `Silakan cek 4 hal ini:\n`;
-            msg += `1. Pastikan SCRIPT_URL berakhiran "/exec" (Bukan /edit).\n`;
-            msg += `2. Pakai email @gmail.com biasa (Bukan email kampus/kantor).\n`;
-            msg += `3. Lakukan Deploy "Versi Baru".\n`;
-            msg += `4. Jalankan Sebagai wajib "SAYA (Me)".\n`;
-            alert(msg);
-        }
-
         function showTicketData(data, title) {
             document.getElementById('success-title').textContent = title;
             const qrData = encodeURIComponent(`BIB:${data.bibNumber}|Nama:${data.name}|WA:${data.wa}`);
@@ -451,7 +502,7 @@
             switchView('view-success');
         }
 
-        // Handler SMART FORM Pendaftaran/Cek Tiket
+        // ================== FORM PESERTA ==================
         document.getElementById('form-smart').addEventListener('submit', async function(e) {
             e.preventDefault();
             if (SCRIPT_URL === 'MASUKKAN_URL_WEB_APP_ANDA_DISINI' || SCRIPT_URL === '') { alert("PENTING: SCRIPT_URL belum dimasukkan!"); return; }
@@ -461,8 +512,7 @@
             const originalBtnText = btnSubmit.innerHTML;
             
             if (isChecking) {
-                // FASE 1
-                btnSubmit.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Memeriksa...`;
+                btnSubmit.innerHTML = `Memeriksa...`;
                 btnSubmit.disabled = true;
 
                 try {
@@ -495,21 +545,20 @@
                         alert("Terjadi kesalahan dari server: " + result.message);
                     }
                 } catch (error) {
-                    showGasError("FASE 1", error.message);
+                    alert("Koneksi ke Google Sheets diblokir. Pastikan deploy dengan 'Jalankan sebagai: SAYA'.");
                 } finally {
                     if (isChecking) { btnSubmit.innerHTML = originalBtnText; }
                     btnSubmit.disabled = false;
                 }
 
             } else {
-                // FASE 2
                 const name = document.getElementById('reg-name').value;
                 const address = document.getElementById('reg-address').value;
                 const genderRadio = document.querySelector('input[name="gender"]:checked');
                 
                 if (!genderRadio) { alert('Pilih Kategori Peserta terlebih dahulu!'); return; }
 
-                btnSubmit.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Mendaftarkan...`;
+                btnSubmit.innerHTML = `Mendaftarkan...`;
                 btnSubmit.disabled = true;
 
                 try {
@@ -527,7 +576,7 @@
                         alert("Terjadi kesalahan dari server: " + result.message);
                     }
                 } catch (error) {
-                    showGasError("FASE 2", error.message);
+                    alert("Koneksi gagal.");
                 } finally {
                     btnSubmit.innerHTML = originalBtnText;
                     btnSubmit.disabled = false;
@@ -535,7 +584,7 @@
             }
         });
 
-        // Handler Admin Login Multi-Role (Ke Google Sheets)
+        // ================== LOGIN ADMIN ==================
         document.getElementById('form-admin-login').addEventListener('submit', async function(e) {
             e.preventDefault();
             if (SCRIPT_URL === 'MASUKKAN_URL_WEB_APP_ANDA_DISINI' || SCRIPT_URL === '') { alert("PENTING: SCRIPT_URL belum dimasukkan!"); return; }
@@ -545,7 +594,7 @@
             
             const btnSubmit = document.getElementById('btn-admin-login');
             const originalBtnText = btnSubmit.innerHTML;
-            btnSubmit.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Memverifikasi...`;
+            btnSubmit.innerHTML = `Memverifikasi...`;
             btnSubmit.disabled = true;
 
             try {
@@ -557,25 +606,19 @@
                 const result = await response.json();
 
                 if (result.status === 'success') {
-                    currentAdminRole = result.role; // Menyimpan status role 'superadmin' atau 'admin'
-                    
-                    // Update Teks Label Role di Dashboard
+                    currentAdminRole = result.role; 
                     document.getElementById('badge-role').textContent = currentAdminRole.toUpperCase();
                     
-                    // Atur Tombol Print BIB berdasarkan role
-                    const printBtns = document.querySelectorAll('.btn-print-bib');
-                    printBtns.forEach(btn => {
+                    // Mengatur elemen berdasarkan hak akses Superadmin
+                    const superadminElements = document.querySelectorAll('.superadmin-only');
+                    superadminElements.forEach(el => {
                         if(currentAdminRole === 'superadmin') {
-                            btn.classList.remove('hidden');
-                            // Karena button desktop butuh inline-flex dan mobile butuh flex
-                            if(btn.parentElement.classList.contains('sm:hidden')) {
-                                btn.classList.add('flex');
-                            } else {
-                                btn.classList.add('inline-flex');
-                            }
+                            el.classList.remove('hidden');
+                            if(el.classList.contains('w-full')) { el.classList.add('flex'); } 
+                            else { el.classList.add('inline-flex'); }
                         } else {
-                            btn.classList.add('hidden');
-                            btn.classList.remove('flex', 'inline-flex');
+                            el.classList.add('hidden');
+                            el.classList.remove('flex', 'inline-flex');
                         }
                     });
 
@@ -585,21 +628,21 @@
                     alert(result.message);
                 }
             } catch (error) {
-                showGasError("LOGIN", error.message);
+                alert("Gagal login. Pastikan deploy Google Sheets benar.");
             } finally {
                 btnSubmit.innerHTML = originalBtnText;
                 btnSubmit.disabled = false;
             }
         });
 
-        // Dashboard & Tables
+        // ================== DASHBOARD DATA ==================
         document.getElementById('search-input').addEventListener('input', function() {
             renderTable(this.value);
         });
 
         async function renderDashboard() {
             const tbody = document.getElementById('table-body');
-            tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-gray-500"><svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Menarik Data Sheets...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-gray-500">Menarik Data Sheets...</td></tr>`;
             
             try {
                 const response = await fetch(SCRIPT_URL, {
@@ -612,12 +655,10 @@
                 
                 if (result.status === 'success') {
                     registrations = result.data; 
-                    
-                    const total = registrations.length;
                     const totalLaki = registrations.filter(r => r.gender === 'Laki-laki').length;
                     const totalPerempuan = registrations.filter(r => r.gender === 'Perempuan').length;
 
-                    document.getElementById('stat-total').textContent = total;
+                    document.getElementById('stat-total').textContent = registrations.length;
                     document.getElementById('stat-male').textContent = totalLaki;
                     document.getElementById('stat-female').textContent = totalPerempuan;
 
@@ -626,7 +667,7 @@
                     tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-red-500">Error: ${result.message}</td></tr>`;
                 }
             } catch (error) {
-                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-red-500">Gagal mengambil data. Pastikan URL GS benar.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-red-500">Gagal mengambil data.</td></tr>`;
             }
         }
 
@@ -666,7 +707,63 @@
         }
 
         // ==========================================
-        // QR CODE SCANNER
+        // KELOLA ADMIN (SUPERADMIN ONLY)
+        // ==========================================
+        function openManageAdmin() {
+            if (currentAdminRole !== 'superadmin') { alert("Ditolak!"); return; }
+            switchView('view-manage-admin');
+            fetchAdminList();
+        }
+
+        async function fetchAdminList() {
+            const tbody = document.getElementById('table-admin-body');
+            tbody.innerHTML = `<tr><td colspan="2" class="px-6 py-8 text-center text-sm text-gray-500">Mengambil data admin...</td></tr>`;
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST', mode: 'cors', redirect: 'follow',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'get_admins' })
+                });
+                const result = await response.json();
+                if (result.status === 'success') {
+                    tbody.innerHTML = '';
+                    result.data.forEach(admin => {
+                        const tr = document.createElement('tr');
+                        const roleBadge = admin.role === 'superadmin' ? `<span class="bg-purple-100 text-purple-700 px-2 py-1 rounded-md text-xs font-bold uppercase">Superadmin</span>` : `<span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-md text-xs font-bold uppercase">Admin</span>`;
+                        tr.innerHTML = `<td class="px-6 py-4 text-sm font-bold text-gray-800">${admin.username}</td><td class="px-6 py-4">${roleBadge}</td>`;
+                        tbody.appendChild(tr);
+                    });
+                }
+            } catch(e) { tbody.innerHTML = `<tr><td colspan="2" class="px-6 py-8 text-center text-sm text-red-500">Gagal mengambil data.</td></tr>`; }
+        }
+
+        document.getElementById('form-add-admin').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-submit-admin');
+            btn.innerHTML = 'Menyimpan...'; btn.disabled = true;
+
+            const u = document.getElementById('new-admin-username').value;
+            const p = document.getElementById('new-admin-password').value;
+            const r = document.getElementById('new-admin-role').value;
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST', mode: 'cors', redirect: 'follow',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'add_admin', username: u, password: p, role: r })
+                });
+                const result = await response.json();
+                if (result.status === 'success') {
+                    alert('Admin berhasil ditambahkan!');
+                    document.getElementById('form-add-admin').reset();
+                    fetchAdminList();
+                } else { alert(result.message); }
+            } catch(e) { alert("Gagal menyimpan data."); }
+            finally { btn.innerHTML = '+ Simpan Admin'; btn.disabled = false; }
+        });
+
+        // ==========================================
+        // SCANNER QR
         // ==========================================
         function startScanner() {
             switchView('view-admin-scanner');
@@ -675,26 +772,19 @@
             document.getElementById('scanner-helper').classList.remove('hidden');
             
             if (!html5QrcodeScanner) {
-                html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { 
-                    fps: 10, 
-                    qrbox: {width: 250, height: 250},
-                    supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
-                }, false);
+                html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: {width: 250, height: 250}, supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA] }, false);
             }
             html5QrcodeScanner.render(onScanSuccess, onScanFailure);
         }
 
         function onScanSuccess(decodedText, decodedResult) {
             if (html5QrcodeScanner) html5QrcodeScanner.clear();
-
             document.getElementById('qr-reader').classList.add('hidden');
             document.getElementById('scanner-helper').classList.add('hidden');
             const resultDiv = document.getElementById('qr-result');
             resultDiv.classList.remove('hidden');
             
-            let scannedBib = "";
-            let scannedWa = "";
-            
+            let scannedBib = ""; let scannedWa = "";
             try {
                 const parts = decodedText.split('|');
                 parts.forEach(part => {
@@ -706,127 +796,71 @@
             function cleanStr(str) { return str ? str.replace(/^(\+62|62|0)/, '').replace(/\D/g, '') : ''; }
             const matchWa = cleanStr(scannedWa);
 
-            const validParticipant = registrations.find(r => 
-                (r.bibNumber === scannedBib) || 
-                (cleanStr(r.wa) === matchWa && matchWa !== '')
-            );
+            const validParticipant = registrations.find(r => (r.bibNumber === scannedBib) || (cleanStr(r.wa) === matchWa && matchWa !== ''));
 
             if (validParticipant) {
                 resultDiv.innerHTML = `
-                    <div class="text-green-500 mb-2">
-                        <svg class="w-20 h-20 mx-auto drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
+                    <div class="text-green-500 mb-2"><svg class="w-20 h-20 mx-auto drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
                     <h3 class="text-2xl sm:text-3xl font-extrabold text-green-600 uppercase tracking-widest">Data Valid</h3>
                     <p class="text-gray-500 text-sm mt-1">Peserta resmi terdaftar.</p>
-                    
                     <div class="mt-6 bg-gray-50 border border-gray-200 p-4 rounded-xl text-left shadow-sm">
-                        <div class="flex flex-col border-b pb-2 mb-2">
-                            <span class="text-gray-400 text-xs">BIB Number</span>
-                            <span class="font-black text-xl text-blue-600">${validParticipant.bibNumber}</span>
-                        </div>
-                        <div class="flex flex-col border-b pb-2 mb-2">
-                            <span class="text-gray-400 text-xs">Nama Lengkap</span>
-                            <span class="font-bold text-gray-800 text-lg">${validParticipant.name}</span>
-                        </div>
-                        <div class="flex justify-between items-end">
-                            <div class="flex flex-col">
-                                <span class="text-gray-400 text-xs">No WhatsApp</span>
-                                <span class="font-semibold text-gray-700">${validParticipant.wa}</span>
-                            </div>
-                            <span class="font-bold uppercase text-xs px-3 py-1 rounded-full ${validParticipant.gender === 'Laki-laki' ? 'bg-indigo-100 text-indigo-700' : 'bg-pink-100 text-pink-700'}">${validParticipant.gender}</span>
-                        </div>
+                        <div class="flex flex-col border-b pb-2 mb-2"><span class="text-gray-400 text-xs">BIB Number</span><span class="font-black text-xl text-blue-600">${validParticipant.bibNumber}</span></div>
+                        <div class="flex flex-col border-b pb-2 mb-2"><span class="text-gray-400 text-xs">Nama Lengkap</span><span class="font-bold text-gray-800 text-lg">${validParticipant.name}</span></div>
+                        <div class="flex justify-between items-end"><div class="flex flex-col"><span class="text-gray-400 text-xs">No WhatsApp</span><span class="font-semibold text-gray-700">${validParticipant.wa}</span></div><span class="font-bold uppercase text-xs px-3 py-1 rounded-full ${validParticipant.gender === 'Laki-laki' ? 'bg-indigo-100 text-indigo-700' : 'bg-pink-100 text-pink-700'}">${validParticipant.gender}</span></div>
                     </div>
-                    
-                    <button onclick="restartScanner()" class="mt-8 w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white py-3 sm:py-4 rounded-xl font-bold shadow-md transition-all">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 7h10v10H7z"></path></svg>
-                        Scan Berikutnya
-                    </button>
+                    <button onclick="restartScanner()" class="mt-8 w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white py-3 sm:py-4 rounded-xl font-bold shadow-md transition-all"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 7h10v10H7z"></path></svg> Scan Berikutnya</button>
                 `;
             } else {
                 resultDiv.innerHTML = `
-                    <div class="text-red-500 mb-2">
-                        <svg class="w-20 h-20 mx-auto drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
+                    <div class="text-red-500 mb-2"><svg class="w-20 h-20 mx-auto drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
                     <h3 class="text-2xl sm:text-3xl font-extrabold text-red-600 uppercase tracking-widest">Tidak Valid</h3>
-                    <p class="text-gray-500 mt-2 text-sm">Data tiket ini tidak ditemukan di dalam database Fun Run.</p>
-                    
-                    <button onclick="restartScanner()" class="mt-8 w-full bg-gray-200 hover:bg-gray-300 active:bg-gray-400 text-gray-800 py-3 rounded-xl font-bold transition-all">
-                        Coba Scan Lagi
-                    </button>
+                    <p class="text-gray-500 mt-2 text-sm">Data tiket ini tidak ditemukan.</p>
+                    <button onclick="restartScanner()" class="mt-8 w-full bg-gray-200 hover:bg-gray-300 active:bg-gray-400 text-gray-800 py-3 rounded-xl font-bold transition-all">Coba Scan Lagi</button>
                 `;
             }
         }
 
-        function onScanFailure(error) { 
-            // Silent error untuk fps kamera
-        }
-
-        function restartScanner() {
-            startScanner();
-        }
-        
+        function onScanFailure(error) { /* silent error */ }
+        function restartScanner() { startScanner(); }
         function closeScanner() {
-            if(html5QrcodeScanner) {
-                html5QrcodeScanner.clear().catch(e => console.log(e));
-            }
+            if(html5QrcodeScanner) { html5QrcodeScanner.clear().catch(e => console.log(e)); }
             switchView('view-admin-dashboard');
         }
 
         // ==========================================
-        // RENDER HALAMAN PRINT BIB (KHUSUS SUPERADMIN)
+        // RENDER PRINT BIB
         // ==========================================
         function renderAndSwitchToPrint() {
-            // Cegah Admin Biasa
-            if(currentAdminRole !== 'superadmin') {
-                alert("Maaf, hak akses ini hanya untuk Superadmin.");
-                return;
-            }
-
+            if(currentAdminRole !== 'superadmin') { alert("Hanya untuk Superadmin."); return; }
             const printArea = document.getElementById('print-area');
             printArea.innerHTML = '';
-
             if (registrations.length === 0) {
                 printArea.innerHTML = `<div class="text-center py-20 text-gray-500 a4-page flex items-center justify-center">Belum ada data pendaftar untuk dicetak.</div>`;
             } else {
                 for (let i = 0; i < registrations.length; i += 2) {
                     const chunk = registrations.slice(i, i + 2);
                     let htmlChunk = `<div class="a4-page page-break bg-white shadow-xl print:shadow-none mb-8 print:mb-0 flex flex-col">`;
-                    
                     chunk.forEach((reg, index) => {
                         const borderClass = index === 0 ? 'border-b-2 border-dashed border-gray-400' : '';
                         const bibNumberOnly = reg.bibNumber ? reg.bibNumber.replace('FR-', '') : '0000';
                         const displayName = reg.name || 'NN';
                         const displayGender = reg.gender || '-';
-                        
                         htmlChunk += `
                         <div class="bib-card flex flex-col items-center justify-center p-8 relative overflow-hidden ${borderClass}">
                             <div class="absolute top-0 left-0 w-full h-4 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
                             <div class="absolute bottom-0 left-0 w-full h-4 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
-                            
                             <h1 class="text-2xl sm:text-3xl font-extrabold tracking-widest text-gray-800 uppercase mb-6 text-center whitespace-nowrap">HARDIKNAS FUN RUN 2026<br><span class="text-xl">DISDIKPORA DONGGALA</span></h1>
-                            
-                            <div class="text-[120px] font-black leading-none text-blue-600 mb-6 tracking-tighter">
-                                ${bibNumberOnly}
-                            </div>
-                            
-                            <div class="bg-gray-100 px-10 py-3 rounded-full border border-gray-200">
-                                <h2 class="text-3xl font-bold text-gray-800 uppercase truncate max-w-lg text-center">
-                                    ${displayName}
-                                </h2>
-                            </div>
-                            <p class="mt-4 text-gray-500 font-medium text-lg uppercase tracking-widest">
-                                Kategori: ${displayGender}
-                            </p>
+                            <div class="text-[120px] font-black leading-none text-blue-600 mb-6 tracking-tighter">${bibNumberOnly}</div>
+                            <div class="bg-gray-100 px-10 py-3 rounded-full border border-gray-200"><h2 class="text-3xl font-bold text-gray-800 uppercase truncate max-w-lg text-center">${displayName}</h2></div>
+                            <p class="mt-4 text-gray-500 font-medium text-lg uppercase tracking-widest">Kategori: ${displayGender}</p>
                             <div class="absolute top-8 right-8 text-sm font-bold text-gray-300 transform rotate-12">OFFICIAL BIB</div>
                         </div>`;
                     });
-
                     if (chunk.length === 1) htmlChunk += `<div class="bib-card flex items-center justify-center text-gray-300">Halaman Kosong</div>`;
                     htmlChunk += `</div>`;
                     printArea.innerHTML += htmlChunk;
                 }
             }
-
             switchView('view-print-bib');
         }
     </script>
