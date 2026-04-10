@@ -56,19 +56,11 @@
     <div id="notification-bar" class="fixed top-0 left-0 w-full text-white text-sm p-3 text-center animate-pulse-bg z-50 hidden shadow-md font-medium"></div>
 
     <!-- 1. VIEW: MAIN (SMART FORM) -->
-    <div id="view-main" class="view-section active min-h-screen py-10 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center relative overflow-hidden bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+    <!-- Background telah diganti dengan link gambar yang Anda berikan -->
+    <div id="view-main" class="view-section active min-h-screen py-10 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center relative overflow-hidden bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: url('https://i.ibb.co.com/HwZ6zGn/8049b0d221d15b10b191b6e76d115fa3.jpg');">
         
-        <!-- Overlay Gelap dan Blur untuk Background agar Form tetap mencolok -->
-        <div class="absolute inset-0 bg-blue-900/60 backdrop-blur-sm"></div>
-
-        <!-- Sponsor Area -->
-        <div class="relative z-10 mb-6 flex flex-col items-center animate-fade-in">
-            <span class="text-blue-100 text-[10px] font-bold tracking-widest uppercase mb-2 drop-shadow-md">Official Sponsor</span>
-            <div class="bg-white/10 backdrop-blur-md px-6 py-2 rounded-2xl border border-white/20 shadow-xl flex items-center justify-center">
-                <!-- GANTI URL DI BAWAH INI DENGAN LINK GAMBAR LOGO HYDRO COCO ANDA (Format PNG Transparan lebih bagus) -->
-                <img src="https://placehold.co/300x100/transparent/ffffff?text=HYDRO+COCO&font=Montserrat" alt="Sponsor Hydro Coco" class="h-10 sm:h-12 object-contain drop-shadow-lg">
-            </div>
-        </div>
+        <!-- Overlay Gelap (Tanpa efek blur sesuai permintaan) -->
+        <div class="absolute inset-0 bg-blue-900/70"></div>
 
         <div class="max-w-md w-full bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden relative border border-white/30 z-10">
             <div class="bg-gradient-to-br from-blue-700 to-indigo-800 py-8 px-4 text-center">
@@ -168,48 +160,40 @@
         </div>
     </div>
 
-    <!-- 3. VIEW: ADMIN LOGIN (Background Sponsor) -->
-    <!-- Gambar Background Pelari -->
+    <!-- 3. VIEW: ADMIN LOGIN (Glassmorphism / Efek Kaca Transparan) -->
+    <!-- Background telah diganti dengan link gambar yang Anda berikan -->
     <div id="view-admin-login" class="view-section hidden min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden bg-cover bg-center bg-no-repeat bg-fixed" 
-         style="background-image: url('https://images.unsplash.com/photo-1526506466336-d716279fccdb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+         style="background-image: url('https://i.ibb.co.com/HwZ6zGn/8049b0d221d15b10b191b6e76d115fa3.jpg');">
         
-        <!-- Overlay gelap agar form login tetap terbaca -->
-        <div class="absolute inset-0 bg-gray-900/75 backdrop-blur-sm"></div>
+        <!-- Overlay gelap dengan efek blur -->
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-md"></div>
 
-        <!-- Sponsor Area (Hydro Coco) -->
-        <div class="relative z-10 mb-6 flex flex-col items-center animate-fade-in">
-            <span class="text-gray-400 text-[10px] font-bold tracking-widest uppercase mb-2 drop-shadow-md">Official Sponsor</span>
-            <div class="bg-white/10 backdrop-blur-md px-6 py-2 rounded-2xl border border-white/20 shadow-xl flex items-center justify-center">
-                <!-- GANTI URL DI BAWAH INI DENGAN LOGO HYDRO COCO YANG ASLI -->
-                <img src="https://placehold.co/300x100/transparent/ffffff?text=HYDRO+COCO&font=Montserrat" alt="Sponsor Hydro Coco" class="h-10 sm:h-12 object-contain drop-shadow-lg">
-            </div>
-        </div>
-
-        <div class="max-w-sm w-full bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 relative z-10 border border-white/20">
+        <!-- Card Login Transparan (Glassmorphism) -->
+        <div class="max-w-sm w-full bg-white/20 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] p-8 relative z-10 border border-white/30">
             <div class="flex justify-center mb-4">
-                <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg">
+                <div class="w-16 h-16 bg-white/30 backdrop-blur-sm border border-white/40 rounded-full flex items-center justify-center text-white shadow-lg">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"></path></svg>
                 </div>
             </div>
-            <h2 class="text-2xl font-extrabold text-center text-gray-800 mb-1">Portal Panitia</h2>
-            <p class="text-xs text-center text-gray-500 mb-6 uppercase tracking-wider font-bold">Hardiknas Fun Run</p>
+            <h2 class="text-2xl font-extrabold text-center text-white mb-1 drop-shadow-md">Portal Panitia</h2>
+            <p class="text-xs text-center text-gray-200 mb-6 uppercase tracking-wider font-bold drop-shadow-md">Hardiknas Fun Run</p>
             
             <form id="form-admin-login">
                 <div class="mb-4">
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Username</label>
-                    <input type="text" id="admin-username" class="w-full bg-white border border-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" placeholder="superadmin / admin" required>
+                    <label class="block text-sm font-bold text-white mb-1 drop-shadow-md">Username</label>
+                    <input type="text" id="admin-username" class="w-full bg-white/20 border border-white/30 text-white placeholder-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white/30 transition-colors shadow-inner" placeholder="superadmin / admin" required>
                 </div>
                 <div class="mb-6">
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Password</label>
-                    <input type="password" id="admin-password" class="w-full bg-white border border-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" placeholder="••••••••" required>
+                    <label class="block text-sm font-bold text-white mb-1 drop-shadow-md">Password</label>
+                    <input type="password" id="admin-password" class="w-full bg-white/20 border border-white/30 text-white placeholder-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white/30 transition-colors shadow-inner" placeholder="••••••••" required>
                 </div>
-                <button type="submit" id="btn-admin-login" class="w-full bg-blue-600 text-white rounded-xl py-3 font-bold hover:bg-blue-700 shadow-lg transition-transform active:scale-95 flex justify-center items-center">
+                <button type="submit" id="btn-admin-login" class="w-full bg-blue-600/90 backdrop-blur-sm text-white rounded-xl py-3 font-bold hover:bg-blue-600 shadow-lg transition-transform active:scale-95 flex justify-center items-center border border-blue-400/50">
                     Masuk Sistem
                 </button>
             </form>
 
             <div class="mt-6 text-center">
-                <button onclick="switchView('view-main')" class="text-sm font-bold text-gray-400 hover:text-gray-800 transition-colors">← Batal & Kembali</button>
+                <button onclick="switchView('view-main')" class="text-sm font-bold text-gray-300 hover:text-white transition-colors drop-shadow-md">← Batal & Kembali</button>
             </div>
         </div>
     </div>
