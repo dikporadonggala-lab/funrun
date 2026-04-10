@@ -55,72 +55,71 @@
 
     <div id="notification-bar" class="fixed top-0 left-0 w-full text-white text-sm p-3 text-center animate-pulse-bg z-50 hidden shadow-md font-medium"></div>
 
-    <!-- 1. VIEW: MAIN (SMART FORM) -->
-    <!-- Background telah diganti dengan link gambar yang Anda berikan -->
+    <!-- 1. VIEW: MAIN (SMART FORM - GLASSMORPHISM) -->
     <div id="view-main" class="view-section active min-h-screen py-10 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center relative overflow-hidden bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: url('https://i.ibb.co.com/HwZ6zGn/8049b0d221d15b10b191b6e76d115fa3.jpg');">
         
-        <!-- Overlay Gelap (Tanpa efek blur sesuai permintaan) -->
-        <div class="absolute inset-0 bg-blue-900/70"></div>
-
-        <div class="max-w-md w-full bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden relative border border-white/30 z-10">
-            <div class="bg-gradient-to-br from-blue-700 to-indigo-800 py-8 px-4 text-center">
-                <!-- Teks disesuaikan ukurannya dan ditambahkan whitespace-nowrap agar 2026 tidak jatuh -->
-                <h2 class="text-[1.15rem] sm:text-2xl font-black text-white leading-tight whitespace-nowrap">HARDIKNAS FUN RUN 2026<br><span class="text-yellow-300 text-[1rem] sm:text-xl">DISDIKPORA DONGGALA</span></h2>
-                <p class="text-blue-100 mt-2 text-xs sm:text-sm">Sistem Pendaftaran & Tiket</p>
+        <!-- KARTU LOGIN TRANSPARAN (GLASSMORPHISM) -->
+        <div class="max-w-md w-full bg-white/20 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] overflow-hidden relative border border-white/40 z-10 mt-4">
+            
+            <!-- Header Biru Transparan -->
+            <div class="bg-blue-700/60 backdrop-blur-sm border-b border-white/30 py-8 px-4 text-center shadow-inner">
+                <h2 class="text-[1.15rem] sm:text-2xl font-black text-white leading-tight whitespace-nowrap drop-shadow-md">HARDIKNAS FUN RUN 2026<br><span class="text-yellow-300 text-[1rem] sm:text-xl">DISDIKPORA DONGGALA</span></h2>
+                <p class="text-blue-50 mt-2 text-xs sm:text-sm drop-shadow-md font-medium">Sistem Pendaftaran & Tiket</p>
             </div>
             
+            <!-- Body Form Putih Transparan -->
             <form id="form-smart" class="p-8 space-y-6">
                 <!-- STEP 1: Nomor WA -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Nomor WhatsApp</label>
-                    <input type="tel" id="reg-wa" required class="mt-1 block w-full border border-gray-300 rounded-xl shadow-sm py-3 px-4 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-lg font-semibold tracking-wide transition-colors" placeholder="081234567890">
-                    <p id="wa-help-text" class="text-xs text-gray-500 mt-2">*Masukkan No. WA untuk mendaftar baru atau melihat tiket Anda.</p>
+                    <label class="block text-sm font-bold text-black drop-shadow-sm">Nomor WhatsApp</label>
+                    <input type="tel" id="reg-wa" required class="mt-1 block w-full bg-white/50 border border-white/50 text-gray-900 placeholder-gray-600 rounded-xl shadow-inner py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/70 text-lg font-bold tracking-wide transition-colors" placeholder="081234567890">
+                    <p id="wa-help-text" class="text-xs text-black mt-2 drop-shadow-sm font-medium">*Masukkan No. WA untuk mendaftar baru atau melihat tiket Anda.</p>
                 </div>
 
-                <!-- STEP 2: Detail Pendaftaran (Tersembunyi secara default) -->
-                <div id="step-2-details" class="hidden space-y-6 pt-6 border-t border-gray-100 animate-fade-in">
+                <!-- STEP 2: Detail Pendaftaran -->
+                <div id="step-2-details" class="hidden space-y-6 pt-6 border-t border-white/30 animate-fade-in">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-                        <input type="text" id="reg-name" class="mt-1 block w-full border border-gray-300 rounded-xl shadow-sm py-3 px-4 focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Contoh: Budi Santoso">
+                        <label class="block text-sm font-bold text-black drop-shadow-sm">Nama Lengkap</label>
+                        <input type="text" id="reg-name" class="mt-1 block w-full bg-white/50 border border-white/50 text-gray-900 placeholder-gray-600 rounded-xl shadow-inner py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/70 transition-colors font-semibold" placeholder="Contoh: Budi Santoso">
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-3">Kategori Peserta</label>
+                        <label class="block text-sm font-bold text-black mb-3 drop-shadow-sm">Kategori Peserta</label>
                         <div class="flex gap-4">
                             <label class="flex-1 cursor-pointer">
                                 <input type="radio" name="gender" value="Laki-laki" class="peer sr-only">
-                                <div class="flex flex-col items-center justify-center py-5 border-2 border-gray-200 rounded-2xl peer-checked:border-blue-500 peer-checked:bg-blue-50 text-gray-600 peer-checked:text-blue-700 transition-all hover:bg-gray-50 shadow-sm">
-                                    <div class="w-16 h-16 mb-3 rounded-full bg-blue-100 flex items-center justify-center shadow-inner border border-blue-200 animate-float">
+                                <div class="flex flex-col items-center justify-center py-5 border border-white/50 rounded-2xl peer-checked:border-blue-500 peer-checked:bg-white/80 text-gray-800 transition-all hover:bg-white/40 shadow-sm backdrop-blur-sm bg-white/30">
+                                    <div class="w-16 h-16 mb-3 rounded-full bg-white/60 flex items-center justify-center shadow-inner border border-white/70 animate-float">
                                         <svg class="w-9 h-9 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
                                     </div>
-                                    <span class="text-sm font-bold">Laki-laki</span>
+                                    <span class="text-sm font-bold drop-shadow-sm">Laki-laki</span>
                                 </div>
                             </label>
                             <label class="flex-1 cursor-pointer">
                                 <input type="radio" name="gender" value="Perempuan" class="peer sr-only">
-                                <div class="flex flex-col items-center justify-center py-5 border-2 border-gray-200 rounded-2xl peer-checked:border-pink-500 peer-checked:bg-pink-50 text-gray-600 peer-checked:text-pink-700 transition-all hover:bg-gray-50 shadow-sm">
-                                    <div class="w-16 h-16 mb-3 rounded-full bg-pink-100 flex items-center justify-center shadow-inner border border-pink-200 animate-float delay-100">
+                                <div class="flex flex-col items-center justify-center py-5 border border-white/50 rounded-2xl peer-checked:border-pink-500 peer-checked:bg-white/80 text-gray-800 transition-all hover:bg-white/40 shadow-sm backdrop-blur-sm bg-white/30">
+                                    <div class="w-16 h-16 mb-3 rounded-full bg-white/60 flex items-center justify-center shadow-inner border border-white/70 animate-float delay-100">
                                         <svg class="w-9 h-9 text-pink-500" fill="currentColor" viewBox="0 0 24 24" style="transform: scaleX(-1);"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
                                     </div>
-                                    <span class="text-sm font-bold">Perempuan</span>
+                                    <span class="text-sm font-bold drop-shadow-sm">Perempuan</span>
                                 </div>
                             </label>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Alamat Lengkap</label>
-                        <textarea id="reg-address" rows="3" class="mt-1 block w-full border border-gray-300 rounded-xl shadow-sm py-3 px-4 focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Ketik alamat domisili..."></textarea>
+                        <label class="block text-sm font-bold text-black drop-shadow-sm">Alamat Lengkap</label>
+                        <textarea id="reg-address" rows="3" class="mt-1 block w-full bg-white/50 border border-white/50 text-gray-900 placeholder-gray-600 rounded-xl shadow-inner py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/70 transition-colors font-semibold" placeholder="Ketik alamat domisili..."></textarea>
                     </div>
                 </div>
 
-                <button type="submit" id="btn-submit-smart" class="w-full flex justify-center py-4 px-4 border border-transparent rounded-xl shadow-lg text-base font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-transform active:scale-95">
+                <button type="submit" id="btn-submit-smart" class="w-full flex justify-center py-4 px-4 border border-white/60 rounded-xl shadow-lg text-base font-extrabold text-blue-900 bg-white/90 hover:bg-white backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-transform active:scale-95">
                     Lanjut
                 </button>
             </form>
 
-            <div class="bg-gray-50 border-t border-gray-100 p-5 text-center">
-                <button onclick="switchView('view-admin-login')" class="text-sm text-gray-500 hover:text-blue-700 font-semibold transition-colors flex items-center justify-center mx-auto">
+            <div class="bg-white/30 backdrop-blur-md border-t border-white/30 p-5 text-center">
+                <button onclick="switchView('view-admin-login')" class="text-sm text-gray-900 hover:text-blue-800 font-extrabold transition-colors flex items-center justify-center mx-auto drop-shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                     Login Panitia
                 </button>
@@ -161,7 +160,6 @@
     </div>
 
     <!-- 3. VIEW: ADMIN LOGIN (Glassmorphism / Efek Kaca Transparan) -->
-    <!-- Background telah diganti dengan link gambar yang Anda berikan -->
     <div id="view-admin-login" class="view-section hidden min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden bg-cover bg-center bg-no-repeat bg-fixed" 
          style="background-image: url('https://i.ibb.co.com/HwZ6zGn/8049b0d221d15b10b191b6e76d115fa3.jpg');">
         
@@ -169,7 +167,7 @@
         <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-md"></div>
 
         <!-- Card Login Transparan (Glassmorphism) -->
-        <div class="max-w-sm w-full bg-white/20 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] p-8 relative z-10 border border-white/30">
+        <div class="max-w-sm w-full bg-white/20 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] p-8 relative z-10 border border-white/30 mt-6">
             <div class="flex justify-center mb-4">
                 <div class="w-16 h-16 bg-white/30 backdrop-blur-sm border border-white/40 rounded-full flex items-center justify-center text-white shadow-lg">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"></path></svg>
@@ -341,7 +339,6 @@
                 </button>
             </div>
 
-            <!-- Form Tambah Admin Baru -->
             <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 mb-6">
                 <h3 class="text-md font-bold text-purple-700 mb-4 uppercase tracking-widest border-b pb-2">Tambah Admin Baru</h3>
                 <form id="form-add-admin" class="space-y-4">
@@ -370,7 +367,6 @@
                 </form>
             </div>
 
-            <!-- Tabel Daftar Admin -->
             <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-purple-50">
@@ -449,12 +445,12 @@
             document.getElementById('form-smart').reset();
             const waInput = document.getElementById('reg-wa');
             waInput.readOnly = false;
-            waInput.classList.remove('bg-gray-100', 'text-gray-500', 'cursor-not-allowed');
+            waInput.classList.remove('bg-white/10', 'text-gray-300', 'cursor-not-allowed');
             document.getElementById('step-2-details').classList.add('hidden');
             document.getElementById('btn-submit-smart').innerHTML = 'Lanjut';
             const helpText = document.getElementById('wa-help-text');
             helpText.textContent = '*Masukkan No. WA untuk mendaftar baru atau melihat tiket Anda.';
-            helpText.classList.remove('text-green-600', 'font-medium');
+            helpText.classList.remove('text-green-700', 'font-medium');
             document.getElementById('reg-name').required = false;
             document.getElementById('reg-address').required = false;
         }
@@ -529,7 +525,7 @@
             const originalBtnText = btnSubmit.innerHTML;
             
             if (isChecking) {
-                btnSubmit.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Memeriksa...`;
+                btnSubmit.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-900 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Memeriksa...`;
                 btnSubmit.disabled = true;
 
                 try {
@@ -548,11 +544,11 @@
                         
                         const waInput = document.getElementById('reg-wa');
                         waInput.readOnly = true;
-                        waInput.classList.add('bg-gray-100', 'text-gray-500', 'cursor-not-allowed');
+                        waInput.classList.add('bg-white/10', 'text-gray-300', 'cursor-not-allowed');
                         
                         const helpText = document.getElementById('wa-help-text');
                         helpText.textContent = '✔️ Nomor belum terdaftar. Silakan lengkapi data di bawah.';
-                        helpText.classList.add('text-green-600', 'font-medium');
+                        helpText.classList.add('text-green-700', 'font-medium');
 
                         document.getElementById('reg-name').required = true;
                         document.getElementById('reg-address').required = true;
@@ -575,7 +571,7 @@
                 
                 if (!genderRadio) { alert('Pilih Kategori Peserta terlebih dahulu!'); return; }
 
-                btnSubmit.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Mendaftarkan...`;
+                btnSubmit.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-900 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Mendaftarkan...`;
                 btnSubmit.disabled = true;
 
                 try {
@@ -626,7 +622,6 @@
                     currentAdminRole = result.role; 
                     document.getElementById('badge-role').textContent = currentAdminRole.toUpperCase();
                     
-                    // Mengatur elemen berdasarkan hak akses Superadmin
                     const superadminElements = document.querySelectorAll('.superadmin-only');
                     superadminElements.forEach(el => {
                         if(currentAdminRole === 'superadmin') {
