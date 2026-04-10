@@ -58,13 +58,16 @@
     <!-- 1. VIEW: MAIN (SMART FORM - GLASSMORPHISM) -->
     <div id="view-main" class="view-section active min-h-screen py-10 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center relative overflow-hidden bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: url('https://i.ibb.co.com/HwZ6zGn/8049b0d221d15b10b191b6e76d115fa3.jpg');">
         
-        <!-- KARTU LOGIN TRANSPARAN (GLASSMORPHISM) -->
+        <!-- Overlay Gelap Netral (Warna kebiruan dihilangkan agar gambar asli terlihat) -->
+        <div class="absolute inset-0 bg-gray-900/60"></div>
+
+        <!-- KARTU LOGIN TRANSPARAN (GLASSMORPHISM KESELURUHAN) -->
         <div class="max-w-md w-full bg-white/20 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] overflow-hidden relative border border-white/40 z-10 mt-4">
             
-            <!-- Header Biru Transparan -->
-            <div class="bg-blue-700/60 backdrop-blur-sm border-b border-white/30 py-8 px-4 text-center shadow-inner">
+            <!-- Header Transparan (Blok warna biru dihapus, disamakan dengan body kartu) -->
+            <div class="border-b border-white/30 py-8 px-4 text-center">
                 <h2 class="text-[1.15rem] sm:text-2xl font-black text-white leading-tight whitespace-nowrap drop-shadow-md">HARDIKNAS FUN RUN 2026<br><span class="text-yellow-300 text-[1rem] sm:text-xl">DISDIKPORA DONGGALA</span></h2>
-                <p class="text-blue-50 mt-2 text-xs sm:text-sm drop-shadow-md font-medium">Sistem Pendaftaran & Tiket</p>
+                <p class="text-gray-100 mt-2 text-xs sm:text-sm drop-shadow-md font-medium">Sistem Pendaftaran & Tiket</p>
             </div>
             
             <!-- Body Form Putih Transparan -->
