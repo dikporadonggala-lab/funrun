@@ -54,7 +54,7 @@
         @keyframes pulse-bg { 0%, 100% { background-color: #22c55e; } 50% { background-color: #16a34a; } }
         .animate-pulse-bg { animation: pulse-bg 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         
-        /* Animasi Melayang (Float) */
+        /* Animasi Melayang (Float) Bosku */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-8px); }
@@ -62,6 +62,16 @@
         .animate-float { animation: float 3.5s ease-in-out infinite; }
         .delay-100 { animation-delay: 100ms; }
         .delay-200 { animation-delay: 200ms; }
+        
+        /* Animasi Blob Background Login */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob { animation: blob 7s infinite; }
+        .animation-delay-2000 { animation-delay: 2s; }
 
         .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
     </style>
@@ -71,7 +81,8 @@
     <div id="notification-bar" class="fixed top-0 left-0 w-full text-white text-sm p-3 text-center animate-pulse-bg z-50 hidden shadow-md font-medium"></div>
 
     <!-- 1. VIEW: MAIN (SMART FORM - GLASSMORPHISM) -->
-    <div id="view-main" class="view-section active min-h-screen py-10 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center relative overflow-hidden bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: url('https://i.ibb.co.com/HwZ6zGn/8049b0d221d15b10b191b6e76d115fa3.jpg');">
+    <!-- Background telah diganti dengan link gambar yang Anda berikan -->
+    <div id="view-main" class="view-section active min-h-screen py-10 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center relative overflow-hidden bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: url('https://i.ibb.co.com/4wPNrwXx/runn.jpg');">
         
         <!-- Overlay Gelap Netral (Diterangkan menjadi 30% agar background terlihat jelas) -->
         <div class="absolute inset-0 bg-gray-900/30"></div>
@@ -94,7 +105,7 @@
                 <!-- STEP 1: Nomor WA -->
                 <div>
                     <label class="block text-sm font-bold text-black drop-shadow-sm">Nomor WhatsApp</label>
-                    <input type="tel" id="reg-wa" minlength="10" maxlength="13" pattern="[0-9]*" title="Nomor harus terdiri dari 10 hingga 13 angka" required class="mt-1 block w-full bg-white/50 border border-white/50 text-gray-900 placeholder-gray-400 rounded-xl shadow-inner py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/70 text-lg font-bold tracking-wide transition-colors" placeholder="08123456789">
+                    <input type="tel" id="reg-wa" minlength="10" maxlength="13" pattern="[0-9]*" title="Nomor harus terdiri dari 10 hingga 13 angka" required class="mt-1 block w-full bg-white/50 border border-white/50 text-gray-900 placeholder-gray-400 rounded-xl shadow-inner py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/70 text-lg font-bold tracking-wide transition-colors" placeholder="081234567890">
                     <p id="wa-help-text" class="text-xs text-black mt-2 drop-shadow-sm font-medium">*Masukkan 10-13 angka No. WA untuk mendaftar atau melihat tiket Anda.</p>
                 </div>
 
@@ -140,7 +151,7 @@
                 </button>
             </form>
 
-            <div class="bg-white/10 backdrop-blur-md border-t border-white/20 p-5 text-center">
+            <div class="bg-white/30 backdrop-blur-md border-t border-white/30 p-5 text-center">
                 <button onclick="switchView('view-admin-login')" class="text-sm text-gray-900 hover:text-blue-800 font-extrabold transition-colors flex items-center justify-center mx-auto drop-shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                     Login Panitia
@@ -181,15 +192,17 @@
         </div>
     </div>
 
-    <!-- 3. VIEW: ADMIN LOGIN -->
+    <!-- 3. VIEW: ADMIN LOGIN (Glassmorphism / Efek Kaca Transparan) -->
     <div id="view-admin-login" class="view-section hidden min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden bg-cover bg-center bg-no-repeat bg-fixed" 
-         style="background-image: url('https://i.ibb.co.com/HwZ6zGn/8049b0d221d15b10b191b6e76d115fa3.jpg');">
+         style="background-image: url('https://i.ibb.co.com/4wPNrwXx/runn.jpg');">
         
-        <div class="absolute inset-0 bg-gray-900/30 backdrop-blur-md"></div>
+        <!-- Overlay gelap (Lebih transparan dan tanpa blur agar gambar utama tajam) -->
+        <div class="absolute inset-0 bg-gray-900/30"></div>
 
-        <div class="max-w-sm w-full bg-white/10 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] p-8 relative z-10 border border-white/20 mt-6">
+        <!-- Card Login Transparan (Efek blur dikurangi drastis menjadi sangat bening) -->
+        <div class="max-w-sm w-full bg-white/5 backdrop-blur-sm rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] p-8 relative z-10 border border-white/20 mt-6">
             <div class="flex justify-center mb-4">
-                <div class="w-16 h-16 bg-white/30 backdrop-blur-sm border border-white/40 rounded-full flex items-center justify-center text-white shadow-lg">
+                <div class="w-16 h-16 bg-white/5 backdrop-blur-none border border-white/30 rounded-full flex items-center justify-center text-white shadow-lg">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"></path></svg>
                 </div>
             </div>
@@ -199,13 +212,13 @@
             <form id="form-admin-login">
                 <div class="mb-4">
                     <label class="block text-sm font-bold text-white mb-1 drop-shadow-md">Username</label>
-                    <input type="text" id="admin-username" class="w-full bg-white/20 border border-white/30 text-white placeholder-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white/30 transition-colors shadow-inner" placeholder="superadmin / admin" required>
+                    <input type="text" id="admin-username" class="w-full bg-white/10 border border-white/30 text-white placeholder-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white/20 transition-colors shadow-inner" placeholder="superadmin / admin" required>
                 </div>
                 <div class="mb-6">
                     <label class="block text-sm font-bold text-white mb-1 drop-shadow-md">Password</label>
-                    <input type="password" id="admin-password" class="w-full bg-white/20 border border-white/30 text-white placeholder-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white/30 transition-colors shadow-inner" placeholder="••••••••" required>
+                    <input type="password" id="admin-password" class="w-full bg-white/10 border border-white/30 text-white placeholder-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white/20 transition-colors shadow-inner" placeholder="••••••••" required>
                 </div>
-                <button type="submit" id="btn-admin-login" class="w-full bg-blue-600/90 backdrop-blur-sm text-white rounded-xl py-3 font-bold hover:bg-blue-600 shadow-lg transition-transform active:scale-95 flex justify-center items-center border border-blue-400/50">
+                <button type="submit" id="btn-admin-login" class="w-full bg-blue-600/70 backdrop-blur-none text-white rounded-xl py-3 font-bold hover:bg-blue-600 shadow-lg transition-transform active:scale-95 flex justify-center items-center border border-blue-400/50">
                     Masuk Sistem
                 </button>
             </form>
@@ -248,7 +261,7 @@
                             <span class="ml-2 hidden lg:inline">Cetak BIB</span>
                         </button>
 
-                        <!-- Tombol Cetak Kupon (BARU) -->
+                        <!-- Tombol Cetak Kupon -->
                         <button onclick="renderAndSwitchToPrintKupon()" class="superadmin-only hidden inline-flex items-center px-3 lg:px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-white bg-yellow-500 hover:bg-yellow-600 transition-transform active:scale-95">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5.5v2"></path><path d="M15 11.5v2"></path><path d="M15 17.5v2"></path><path d="M5 5h14a2 2 0 0 1 2 2v2.5a2.5 2.5 0 0 0 0 5V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2.5a2.5 2.5 0 0 0 0-5V7a2 2 0 0 1 2-2z"></path></svg>
                             <span class="ml-2 hidden lg:inline">Cetak Kupon</span>
@@ -474,7 +487,7 @@
         // =========================================================================
         // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI BAWAH INI
         // =========================================================================
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw8t7aND1jyHHeftFTrrwYL2CiI9-UgAWvoToZ044CgkKUajZVbZGh89v9FSr78WbQS/exec'; 
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3ovOFV3eBYX3mmcspb2Ccd2r0MKi3rGnNJfRGaI24eWTFnB41lkftKp9I0pWGeSyp/exec'; 
 
         let registrations = [];
         let isChecking = true; 
@@ -496,7 +509,7 @@
             document.getElementById('step-2-details').classList.add('hidden');
             document.getElementById('btn-submit-smart').innerHTML = 'Lanjut';
             const helpText = document.getElementById('wa-help-text');
-            helpText.textContent = '*Masukkan No. WA untuk mendaftar baru atau melihat tiket Anda.';
+            helpText.textContent = '*Masukkan 10-13 angka No. WA untuk mendaftar atau melihat tiket Anda.';
             helpText.classList.remove('text-green-700', 'font-medium');
             document.getElementById('reg-name').required = false;
             document.getElementById('reg-address').required = false;
