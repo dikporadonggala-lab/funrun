@@ -179,6 +179,7 @@
             <p class="text-gray-500 mt-2 text-sm no-print">Simpan & tunjukkan QR Code ini untuk menukarkan BIB Number Anda.</p>
             
             <div class="my-6 p-4 bg-gray-50 rounded-2xl border border-gray-200 inline-block shadow-sm">
+                <!-- AREA QR CODE (ID Tetap Sama) -->
                 <img id="success-qr" src="" alt="QR Code" class="mx-auto w-48 h-48 rounded-xl bg-white p-2" />
             </div>
 
@@ -190,7 +191,6 @@
             </div>
 
             <div class="space-y-3 no-print">
-                <!-- Wrapper Flex untuk membagi 2 tombol bersebelahan (50% : 50%) -->
                 <div class="flex gap-2 w-full">
                     <button onclick="window.print()" class="w-1/2 flex justify-center items-center py-3 px-2 rounded-xl shadow-md text-[11px] sm:text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors">
                         <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
@@ -513,7 +513,7 @@
         // =========================================================================
         // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI BAWAH INI
         // =========================================================================
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwVlT4sCfQQuHg0RTRyReESNH1MLzo2MvyCXR9xjmtHgP5ZgkpJVdjDDv3C5OpsEkzL/exec'; 
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz306DviOw9FiFoSdgcHM22IY8qDTkE0__YyrtdfLiGHifXEG2P_rsS7aTlgUkQqUAG/exec'; 
 
         let registrations = [];
         let isChecking = true; 
@@ -685,7 +685,9 @@
         function showTicketData(data, title) {
             document.getElementById('success-title').textContent = title;
             const qrData = encodeURIComponent(`BIB:${data.bibNumber}|Nama:${data.name}|WA:${data.wa}`);
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${qrData}`;
+            
+            // MENGGUNAKAN API BARU YANG LEBIH STABIL (QUICKCHART.IO)
+            const qrUrl = `https://quickchart.io/qr?size=250&margin=1&text=${qrData}`;
             
             document.getElementById('success-qr').src = qrUrl;
             document.getElementById('success-bib').textContent = data.bibNumber;
@@ -883,7 +885,8 @@
                     tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-red-500">Error: ${result.message}</td></tr>`;
                 }
             } catch (error) {
-                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-red-500">Gagal mengambil data. Pastikan URL GS benar.</td></tr>`;
+                console.error(error); // Tampilkan detail error di console browser
+                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-red-500">Gagal memproses baris tabel. Pastikan tidak ada data aneh/kosong di Google Sheets.</td></tr>`;
             }
         }
 
@@ -892,11 +895,15 @@
             tbody.innerHTML = ''; 
             
             const query = searchQuery ? searchQuery.toLowerCase() : '';
-            const filteredData = registrations.filter(r => 
-                r.name.toLowerCase().includes(query) || 
-                r.wa.includes(query) ||
-                r.bibNumber.toLowerCase().includes(query)
-            );
+            
+            // PERBAIKAN: Menggunakan fungsi String() agar sistem kebal dan tidak crash 
+            // saat menemukan data peserta yang kosong atau formatnya aneh di Google Sheets
+            const filteredData = registrations.filter(r => {
+                const safeName = r.name ? String(r.name).toLowerCase() : '';
+                const safeWa = r.wa ? String(r.wa).toLowerCase() : '';
+                const safeBib = r.bibNumber ? String(r.bibNumber).toLowerCase() : '';
+                return safeName.includes(query) || safeWa.includes(query) || safeBib.includes(query);
+            });
 
             if (filteredData.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-gray-500">Belum ada data pendaftar.</td></tr>`;
@@ -1058,12 +1065,14 @@
                     let htmlChunk = `<div class="a4-page page-break bg-white shadow-xl print:shadow-none mb-8 print:mb-0 flex flex-col">`;
                     chunk.forEach((reg, index) => {
                         const borderClass = index === 0 ? 'border-b-2 border-dashed border-gray-400' : '';
-                        const bibNumberOnly = reg.bibNumber ? reg.bibNumber.replace('FR-', '') : '0000';
+                        
+                        // PERBAIKAN: Mencegah error saat memotong (replace) tulisan "FR-" pada BIB jika data kosong
+                        const bibNumberOnly = reg.bibNumber ? String(reg.bibNumber).replace('FR-', '') : '0000';
                         const displayName = reg.name || 'NN';
                         
-                        // Generate QR Code unik untuk masing-masing BIB
+                        // MENGGUNAKAN API BARU (QUICKCHART.IO) JUGA UNTUK HALAMAN CETAK BIB
                         const qrData = encodeURIComponent(`BIB:${reg.bibNumber}|Nama:${reg.name}|WA:${reg.wa}`);
-                        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${qrData}`;
+                        const qrUrl = `https://quickchart.io/qr?size=150&margin=0&text=${qrData}`;
 
                         htmlChunk += `
                         <div class="bib-card relative overflow-hidden ${borderClass}" style="background-image: url('https://i.ibb.co.com/TqxYVZp9/bibnumber-ok.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
@@ -1109,7 +1118,8 @@
                     let htmlChunk = `<div class="kupon-page page-break bg-white shadow-xl print:shadow-none mb-8 print:mb-0">`;
                     
                     chunk.forEach((reg) => {
-                        const bibNumberOnly = reg.bibNumber ? reg.bibNumber.replace('FR-', '') : '0000';
+                        // PERBAIKAN: Mencegah error saat memotong tulisan BIB Kupon
+                        const bibNumberOnly = reg.bibNumber ? String(reg.bibNumber).replace('FR-', '') : '0000';
                         const displayName = reg.name || 'NN';
                         
                         htmlChunk += `
