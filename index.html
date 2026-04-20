@@ -8,6 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Library QR Code Scanner -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <!-- TAMBAHAN BARU: Library Local QR Code Generator (SUPER CEPAT) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <style>
         /* Gaya cetak PDF */
@@ -24,6 +26,14 @@
         
         .a4-page { width: 210mm; min-height: 297mm; background: white; margin: 0 auto; padding: 0; box-sizing: border-box; }
         .bib-card { height: 148.5mm; width: 100%; box-sizing: border-box; }
+        
+        /* OPTIMASI: Background BIB diload 1x via CSS agar Chrome tidak berat */
+        .bg-bib-template {
+            background-image: url('https://i.ibb.co.com/TqxYVZp9/bibnumber-ok.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
         
         /* Grid Khusus Kupon Undian (50 per Halaman) */
         .kupon-page {
@@ -179,8 +189,8 @@
             <p class="text-gray-500 mt-2 text-sm no-print">Simpan & tunjukkan QR Code ini untuk menukarkan BIB Number Anda.</p>
             
             <div class="my-6 p-4 bg-gray-50 rounded-2xl border border-gray-200 inline-block shadow-sm">
-                <!-- AREA QR CODE (ID Tetap Sama) -->
-                <img id="success-qr" src="" alt="QR Code" class="mx-auto w-48 h-48 rounded-xl bg-white p-2" />
+                <!-- WADAH QR CODE LOKAL -->
+                <div id="success-qr" class="mx-auto w-48 h-48 bg-white p-2 flex justify-center items-center rounded-xl"></div>
             </div>
 
             <div class="bg-blue-50 p-5 rounded-2xl mb-6 text-center border border-blue-100">
@@ -684,12 +694,21 @@
 
         function showTicketData(data, title) {
             document.getElementById('success-title').textContent = title;
-            const qrData = encodeURIComponent(`BIB:${data.bibNumber}|Nama:${data.name}|WA:${data.wa}`);
             
-            // MENGGUNAKAN API BARU YANG LEBIH STABIL (QUICKCHART.IO)
-            const qrUrl = `https://quickchart.io/qr?size=250&margin=1&text=${qrData}`;
+            // Generate QR Code Secara LOKAL (Super Cepat, Tanpa Internet!)
+            const qrData = `BIB:${data.bibNumber}|Nama:${data.name}|WA:${data.wa}`;
+            const qrContainer = document.getElementById('success-qr');
+            qrContainer.innerHTML = ''; // Bersihkan QR lama
             
-            document.getElementById('success-qr').src = qrUrl;
+            new QRCode(qrContainer, {
+                text: qrData,
+                width: 170, // Ukuran pas
+                height: 170,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.L
+            });
+            
             document.getElementById('success-bib').textContent = data.bibNumber;
             document.getElementById('success-name').textContent = data.name;
             document.getElementById('success-gender').textContent = data.gender;
@@ -885,8 +904,8 @@
                     tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-red-500">Error: ${result.message}</td></tr>`;
                 }
             } catch (error) {
-                console.error(error); // Tampilkan detail error di console browser
-                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-red-500">Gagal memproses baris tabel. Pastikan tidak ada data aneh/kosong di Google Sheets.</td></tr>`;
+                console.error(error); // Tampilkan error di console
+                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-red-500">Gagal memproses baris tabel. Pastikan tidak ada data kosong di Google Sheets.</td></tr>`;
             }
         }
 
@@ -896,8 +915,7 @@
             
             const query = searchQuery ? searchQuery.toLowerCase() : '';
             
-            // PERBAIKAN: Menggunakan fungsi String() agar sistem kebal dan tidak crash 
-            // saat menemukan data peserta yang kosong atau formatnya aneh di Google Sheets
+            // PENGAMANAN: Membungkus variabel dengan String() agar tahan banting dari data kosong
             const filteredData = registrations.filter(r => {
                 const safeName = r.name ? String(r.name).toLowerCase() : '';
                 const safeWa = r.wa ? String(r.wa).toLowerCase() : '';
@@ -1051,54 +1069,72 @@
         }
 
         // ==========================================
-        // RENDER PRINT BIB
+        // RENDER PRINT BIB (DIPERBARUI - OFFLINE QR & BG OPTIMIZED)
         // ==========================================
         function renderAndSwitchToPrint() {
             if(currentAdminRole !== 'superadmin') { alert("Hanya untuk Superadmin."); return; }
             const printArea = document.getElementById('print-area');
             printArea.innerHTML = '';
+            
             if (registrations.length === 0) {
                 printArea.innerHTML = `<div class="text-center py-20 text-gray-500 a4-page flex items-center justify-center">Belum ada data pendaftar untuk dicetak.</div>`;
-            } else {
-                for (let i = 0; i < registrations.length; i += 2) {
-                    const chunk = registrations.slice(i, i + 2);
-                    let htmlChunk = `<div class="a4-page page-break bg-white shadow-xl print:shadow-none mb-8 print:mb-0 flex flex-col">`;
-                    chunk.forEach((reg, index) => {
-                        const borderClass = index === 0 ? 'border-b-2 border-dashed border-gray-400' : '';
-                        
-                        // PERBAIKAN: Mencegah error saat memotong (replace) tulisan "FR-" pada BIB jika data kosong
-                        const bibNumberOnly = reg.bibNumber ? String(reg.bibNumber).replace('FR-', '') : '0000';
-                        const displayName = reg.name || 'NN';
-                        
-                        // MENGGUNAKAN API BARU (QUICKCHART.IO) JUGA UNTUK HALAMAN CETAK BIB
-                        const qrData = encodeURIComponent(`BIB:${reg.bibNumber}|Nama:${reg.name}|WA:${reg.wa}`);
-                        const qrUrl = `https://quickchart.io/qr?size=150&margin=0&text=${qrData}`;
+                switchView('view-print-bib');
+                return;
+            } 
+            
+            let htmlContent = '';
+            for (let i = 0; i < registrations.length; i += 2) {
+                const chunk = registrations.slice(i, i + 2);
+                htmlContent += `<div class="a4-page page-break bg-white shadow-xl print:shadow-none mb-8 print:mb-0 flex flex-col">`;
+                
+                chunk.forEach((reg, index) => {
+                    const borderClass = index === 0 ? 'border-b-2 border-dashed border-gray-400' : '';
+                    const bibNumberOnly = reg.bibNumber ? String(reg.bibNumber).replace('FR-', '') : '0000';
+                    const displayName = reg.name || 'NN';
+                    const qrData = `BIB:${reg.bibNumber}|Nama:${reg.name}|WA:${reg.wa}`;
 
-                        htmlChunk += `
-                        <div class="bib-card relative overflow-hidden ${borderClass}" style="background-image: url('https://i.ibb.co.com/TqxYVZp9/bibnumber-ok.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-                            
-                            <!-- AREA NOMOR BIB -->
-                            <div class="absolute w-full flex justify-center" style="top: 18%;">
-                                <div class="text-[280px] font-black leading-none text-gray-900 tracking-[0.05em] drop-shadow-md">${bibNumberOnly}</div>
-                            </div>
-                            
-                            <!-- AREA NAMA PESERTA -->
-                            <div class="absolute flex items-center" style="bottom: 7.5%; left: 7.5%; width: 65%; height: 50px;">
-                                <h2 class="text-[42px] font-extrabold text-gray-800 uppercase truncate text-left drop-shadow-sm w-full">${displayName}</h2>
-                            </div>
-                            
-                            <!-- AREA QR CODE -->
-                            <div class="absolute" style="bottom: 5.5%; right: 4%;">
-                                <img src="${qrUrl}" alt="QR Code" class="w-[105px] h-[105px] p-1 bg-white rounded-lg shadow-sm" />
-                            </div>
-
-                        </div>`;
-                    });
-                    if (chunk.length === 1) htmlChunk += `<div class="bib-card flex items-center justify-center text-gray-300">Halaman Kosong</div>`;
-                    htmlChunk += `</div>`;
-                    printArea.innerHTML += htmlChunk;
-                }
+                    htmlContent += `
+                    <div class="bib-card bg-bib-template relative overflow-hidden ${borderClass}">
+                        <!-- AREA NOMOR BIB -->
+                        <div class="absolute w-full flex justify-center" style="top: 18%;">
+                            <div class="text-[280px] font-black leading-none text-gray-900 tracking-[0.05em] drop-shadow-md">${bibNumberOnly}</div>
+                        </div>
+                        
+                        <!-- AREA NAMA PESERTA -->
+                        <div class="absolute flex items-center" style="bottom: 7.5%; left: 7.5%; width: 65%; height: 50px;">
+                            <h2 class="text-[42px] font-extrabold text-gray-800 uppercase truncate text-left drop-shadow-sm w-full">${displayName}</h2>
+                        </div>
+                        
+                        <!-- WADAH QR CODE LOKAL -->
+                        <div class="absolute flex justify-center items-center bg-white p-1 rounded-lg shadow-sm" style="bottom: 5.5%; right: 4%; width: 105px; height: 105px;">
+                            <div class="qr-print-placeholder" data-qr="${qrData}"></div>
+                        </div>
+                    </div>`;
+                });
+                
+                if (chunk.length === 1) htmlContent += `<div class="bib-card flex items-center justify-center text-gray-300">Halaman Kosong</div>`;
+                htmlContent += `</div>`;
             }
+            
+            // Masukkan HTML ke halaman
+            printArea.innerHTML = htmlContent;
+            
+            // RENDER QR CODE SECARA LOKAL PADA HALAMAN PRINT (Sangat Cepat)
+            setTimeout(() => {
+                const qrElements = document.querySelectorAll('.qr-print-placeholder');
+                qrElements.forEach(el => {
+                    const textData = el.getAttribute('data-qr');
+                    if (textData) {
+                        new QRCode(el, {
+                            text: textData,
+                            width: 90,
+                            height: 90,
+                            correctLevel: QRCode.CorrectLevel.L
+                        });
+                    }
+                });
+            }, 100);
+
             switchView('view-print-bib');
         }
 
@@ -1118,7 +1154,6 @@
                     let htmlChunk = `<div class="kupon-page page-break bg-white shadow-xl print:shadow-none mb-8 print:mb-0">`;
                     
                     chunk.forEach((reg) => {
-                        // PERBAIKAN: Mencegah error saat memotong tulisan BIB Kupon
                         const bibNumberOnly = reg.bibNumber ? String(reg.bibNumber).replace('FR-', '') : '0000';
                         const displayName = reg.name || 'NN';
                         
