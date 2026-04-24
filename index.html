@@ -1069,7 +1069,7 @@
         }
 
         // ==========================================
-        // RENDER PRINT BIB (DIPERBARUI - OFFLINE QR & BG OPTIMIZED)
+        // RENDER PRINT BIB (DIPERBARUI - SISTEM ANTREAN QR)
         // ==========================================
         function renderAndSwitchToPrint() {
             if(currentAdminRole !== 'superadmin') { alert("Hanya untuk Superadmin."); return; }
@@ -1119,20 +1119,39 @@
             // Masukkan HTML ke halaman
             printArea.innerHTML = htmlContent;
             
-            // RENDER QR CODE SECARA LOKAL PADA HALAMAN PRINT (Sangat Cepat)
+            // RENDER QR CODE SECARA LOKAL DENGAN SISTEM ANTREAN (BATCH PROCESSING)
             setTimeout(() => {
-                const qrElements = document.querySelectorAll('.qr-print-placeholder');
-                qrElements.forEach(el => {
-                    const textData = el.getAttribute('data-qr');
-                    if (textData) {
-                        new QRCode(el, {
-                            text: textData,
-                            width: 90,
-                            height: 90,
-                            correctLevel: QRCode.CorrectLevel.L
-                        });
+                const qrElements = Array.from(document.querySelectorAll('.qr-print-placeholder'));
+                let currentIndex = 0;
+                const batchSize = 15; // Proses 15 QR Code sekaligus, lalu istirahat sebentar
+
+                function processBatch() {
+                    const end = Math.min(currentIndex + batchSize, qrElements.length);
+                    for (let i = currentIndex; i < end; i++) {
+                        const el = qrElements[i];
+                        const textData = el.getAttribute('data-qr');
+                        if (textData) {
+                            try {
+                                new QRCode(el, {
+                                    text: textData,
+                                    width: 90,
+                                    height: 90,
+                                    correctLevel: QRCode.CorrectLevel.L
+                                });
+                            } catch(e) {
+                                console.error("Gagal membuat QR untuk:", textData);
+                            }
+                        }
                     }
-                });
+                    currentIndex += batchSize;
+                    
+                    // Jika masih ada sisa, lanjutkan ke batch berikutnya setelah jeda 10 milidetik
+                    if (currentIndex < qrElements.length) {
+                        setTimeout(processBatch, 10);
+                    }
+                }
+
+                processBatch(); // Mulai proses antrean pertama
             }, 100);
 
             switchView('view-print-bib');
